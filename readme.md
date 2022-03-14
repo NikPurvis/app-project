@@ -41,6 +41,7 @@ As a user...
 *The full list of the songs that each user has selected to play for the evening. It will show the song name and artist, as well as the name of who selected it, the position they want to play, and any comment they felt like leaving. Finally, there's a button on the left-hand side that can be clicked to mark the song as having been played and remove it to keep the setlist easily readable.*
 
 ---
+---
 
 ## The ERD (original flavor)
 
@@ -61,6 +62,17 @@ Featuring three models: **user**, **queue**, and **songs**.
 
 **Songs** is the available song library. This is where the majority of searching and filtering will happen. It will contain the song's title, artist, year, and genre, as well as show the positions charted in the song (from which the player will select when adding to the queue).
 
+---
+
+## ERD (third time's the charm)
+
+![The Entity Relationship Diagram](images/erd3.jpg)
+
+There are a total of four documents with two sub-documents: **User** (with **Comments**), **Song** (with **Positions**), **Request** and **Setlist**.
+
+At the center is **Request**, which is a collection of information from User and Song (as selected by the user), alongside its own unique ID and the "Played" field which will be a boolean. These requests will themselves be pulled into **Setlist**, which will be rendered to the users as a view, listing songs they and others have requested.
+
+---
 ---
 
 ## MVP
