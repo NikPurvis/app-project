@@ -42,10 +42,24 @@ As a user...
 
 ---
 
-## The ERD
+## The ERD (original flavor)
 
 ![The Entity Relationship Diagram](images/erd.jpg)
 *Featuring three models: the song library, the gameplay positions, and the queue/setlist entries. (It could be that I won't need the gameplay portion to be a separate model depending on how I go about this. I'd prefer to keep it to two, but diagrammed for three just in case.)*
+
+---
+
+## The ERD (take two)
+
+![The Entity Relationship Diagram](images/erd2.jpg)
+
+Featuring three models: **user**, **queue**, and **songs**.
+
+**User** will consist of the user's name and their role, either player or manager (can reset the game session and mark setlist items played).
+
+**Queue** (the setlist), will be contain multiple entires per session, each made up of the player's name, the song and position they want to play, their comment (if any), and a boolean for played or unplayed.
+
+**Songs** is the available song library. This is where the majority of searching and filtering will happen. It will contain the song's title, artist, year, and genre, as well as show the positions charted in the song (from which the player will select when adding to the queue).
 
 ---
 
