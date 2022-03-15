@@ -2,7 +2,7 @@
 // Import Dependencies
 ///////////////////////////////////////
 const mongoose = require('./connection')
-const Song = require('./songs')
+const Songs = require('./songs')
 
 
 ////////////////////////////////////////////
@@ -76,12 +76,14 @@ db.on('open', () => {
             position: [ "Vocals", "Harmonies", "Guitar", "Keys" ]
         }
     ]
+
+
     // 1. Delete all the data that already exists (will only happen if data exists)
-    Song.remove({})
+    Songs.remove({})
         .then (deletedSongs => {
             console.log("This is what remove returns:", deletedSongs)
             // 2. Create with our seed data
-            Song.create(seedSongs)
+            Songs.create(seedSongs)
                 .then(data => {
                     console.log("Here are the seeded products:", data)
                     db.close()

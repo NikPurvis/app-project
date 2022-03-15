@@ -15,11 +15,16 @@ const router = express.Router()
 // Routes
 ////////////////////////////////////////////
 
-// SONGS route
+// INDEX route for all songs
 router.get("/", (req, res) => {
-    res.send("/songs route")
-    // res.render("index")
+    // res.send("/songs route")
+    Songs.find({})
+    .then(songs => {
+        res.render("songs", {songs})
+    })
+    .catch(error => res.json(error))
 })
+
 
 // JSON route to get direct look at all the objects in Songs
 router.get("/json", (req, res) => {
@@ -29,6 +34,7 @@ router.get("/json", (req, res) => {
     })
     .catch(error => res.json(error))
 })
+
 
 // router.get("/songs", (req, res) => {
 //     res.render("/")
