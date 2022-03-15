@@ -4,9 +4,10 @@
 require("dotenv").config() // make env variables available
 const express = require("express")
 const middleware = require('./utils/middleware')
-const ExampleRouter = require('./controllers/example')
-const UserRouter = require('./controllers/user')
-const User = require("./models/user")
+const SongsRouter = require('./controllers/songs')
+// const UserRouter = require('./controllers/user')
+// const User = require("./models/user")
+const Song = require("./models/songs.js")
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
 // user and resource routes linked in ./utils/middleware.js
 
@@ -21,13 +22,14 @@ middleware(app)
 //    Routes      //
 ////////////////////
 
-app.use('/auth', UserRouter)
-app.use('/examples', ExampleRouter)
+// app.use('/auth', UserRouter)
+app.use('/songs', SongsRouter)
 
 app.get('/', (req, res) => {
     const { username, userId, loggedIn } = req.session
 	res.render('index.liquid', { loggedIn, username, userId })
 })
+
 
 app.get('/error', (req, res) => {
 	const error = req.query.error || 'This Page Does Not Exist'
