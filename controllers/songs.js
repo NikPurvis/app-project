@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
     // res.send("/songs route")
     Songs.find({})
     .then(songs => {
-        res.render("songs", {songs})
+        res.render("songs/index", {songs: songs})
     })
     .catch(error => res.json(error))
 })

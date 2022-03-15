@@ -2,13 +2,12 @@
 
 {% block content %}
     <div class="container-md">
-
         <article>
             <h2>YO</h2>
 
             <p>before loop</p>
-            {% for song in Songs %}
-                <li>{{ song.title }}</li>
+            {% for songs in songs %}
+                <li>{{ songs.title }}</li>
             {% endfor %}
             <p>after loop</p>
 

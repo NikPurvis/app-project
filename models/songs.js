@@ -19,9 +19,10 @@ const songSchema = new Schema(
 	{ timestamps: true }
 )
 
-const Songs = model("Songs", songSchema)
+// Make the Songs model
+const songs = model("songs", songSchema)
 
 /////////////////////////////////
 // Export our Model
 /////////////////////////////////
-module.exports = Songs
+module.exports = songs
