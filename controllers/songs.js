@@ -2,6 +2,7 @@
 // Import dependencies
 ////////////////////////////////////////////
 const express = require("express")
+const Songs = require("../models/songs")
 
 
 ////////////////////////////////////////////
@@ -19,6 +20,19 @@ router.get("/", (req, res) => {
     res.send("/songs route")
     // res.render("index")
 })
+
+// JSON route to get direct look at all the objects in Songs
+router.get("/json", (req, res) => {
+    Songs.find({})
+    .then (songs => {
+        res.send({ songs })
+    })
+    .catch(error => res.json(error))
+})
+
+// router.get("/songs", (req, res) => {
+//     res.render("/")
+// })
 
 // // SHOW route
 // router.post("/", (req, res) => {
