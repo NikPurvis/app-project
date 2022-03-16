@@ -35,11 +35,38 @@ router.get("/json", (req, res) => {
     .catch(error => res.json(error))
 })
 
-// SHOW route, sorting all songs alphabetically by title
-router.post("/titles", (req, res) => {
+// SHOW route, sorting all songs alphabetically by TITLE
+router.post("/title", (req, res) => {
     Songs.find({}).sort({ title: 1 })
         .then(songs => {
-            res.render("songs/titles", {songs: songs})
+            res.render("songs/title", {songs: songs})
+        })
+        .catch(error => res.json(error))
+})
+
+// SHOW route, sorting all songs alphabetically by ARTIST
+router.post("/artist", (req, res) => {
+    Songs.find({}).sort({ artist: 1 })
+        .then(songs => {
+            res.render("songs/artist", {songs: songs})
+        })
+        .catch(error => res.json(error))
+})
+
+// SHOW route, sorting all songs alphabetically by YEAR
+router.post("/year", (req, res) => {
+    Songs.find({}).sort({ year: 1 })
+        .then(songs => {
+            res.render("songs/year", {songs: songs})
+        })
+        .catch(error => res.json(error))
+})
+
+// SHOW route, sorting all songs alphabetically by GENRE
+router.post("/genre", (req, res) => {
+    Songs.find({}).sort({ genre: 1 })
+        .then(songs => {
+            res.render("songs/genre", {songs: songs})
         })
         .catch(error => res.json(error))
 })

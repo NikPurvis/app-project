@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container-md">
         <article>
-            <h2>All Songs (searchable in the near future)</h2>
+            <h2>Sorted: Genre</h2>
 
             <h3>
                 <form action="/songs/title" method="POST"><button type="submit">Title</button></form>
@@ -14,8 +14,8 @@
 
             {% for song in songs %}
 
-            <li>
-                <a href="/songs/{{ song.id }}">"{{ song.title }}"</a> || {{ song.artist }} || {{ song.year }}  ||  {{ song.genre }}
+            <li>                
+                <a href="/songs/{{ song.id }}">"{{ song.title }}"</a> || {{ song.artist }} || {{ song.year }}  ||  <b>{{ song.genre }}</b>
             </li>
 
 
