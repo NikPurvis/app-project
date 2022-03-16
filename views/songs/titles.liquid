@@ -3,12 +3,9 @@
 {% block content %}
     <div class="container-md">
         <article>
-            <h2>All Songs (searchable in the near future)</h2>
+            <h2>Sorted: Songs</h2>
 
-            <h3><form action="/songs/titles" method="POST"><button type="submit">Titles</button></form>
-
-
-                || Artist || Year || Genre</h3>
+            <h3>Title || Artist || Year || Genre</h3>
 
             {% for song in songs %}
 

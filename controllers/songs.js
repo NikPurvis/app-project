@@ -35,6 +35,14 @@ router.get("/json", (req, res) => {
     .catch(error => res.json(error))
 })
 
+// SHOW route, sorting all songs alphabetically by title
+router.post("/titles", (req, res) => {
+    Songs.find({}).sort({ title: 1 })
+        .then(songs => {
+            res.render("songs/titles", {songs: songs})
+        })
+        .catch(error => res.json(error))
+})
 
 // SHOW route for individual songs
 router.get("/:id", (req, res) => {
@@ -45,6 +53,7 @@ router.get("/:id", (req, res) => {
         })
         .catch(error => res.json(error))
 })
+
 
 
 // router.get("/songs", (req, res) => {
