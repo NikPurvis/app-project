@@ -36,6 +36,17 @@ router.get("/json", (req, res) => {
 })
 
 
+// SHOW route for individual songs
+router.get("/:id", (req, res) => {
+    const songId = req.params.id
+    Songs.findById(songId)
+        .then(song => {
+            res.render("songs/show", {song})
+        })
+        .catch(error => res.json(error))
+})
+
+
 // router.get("/songs", (req, res) => {
 //     res.render("/")
 // })

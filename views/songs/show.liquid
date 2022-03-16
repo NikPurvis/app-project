@@ -1,0 +1,44 @@
+{% layout 'layout.liquid' %}
+
+
+{% block content %}
+<h1>{{ song.title}} by {{ song.artist }}</h1>
+
+    {% if song.position contains "Vocals" %}
+        <img src="../rb-vocals.png">
+    {% else %}
+        <img src="../rb-vocals-no.png">
+    {% endif %}
+    {% if song.position contains "Duet" %}
+        <img src="../rb-duet.png">
+    {% else %}
+        <img src="../rb-duet-no.png">
+    {% endif %}
+    {% if song.position contains "Harmonies" %}
+        <img src="../rb-harm.png">
+    {% else %}
+        <img src="../rb-harm-no.png">
+    {% endif %}
+    {% if song.position contains "Guitar" %}
+        <img src="../rb-guitar.png">
+    {% else %}
+        <img src="../rb-guitar-no.png"> 
+    {% endif %}
+    {% if song.position contains "Bass" %}
+        <img src="../rb-bass.png">
+    {% else %}
+        <img src="../rb-bass-no.png">
+    {% endif %}
+    {% if song.position contains "Drums" %}
+        <img src="../rb-drums.png">
+    {% else %}
+        <img src="../rb-drums-no.png">
+    {% endif %}
+    {% if song.position contains "Keys" %}
+        <img src="../rb-keys.png">
+    {% else %}
+        <img src="../rb-keys-no.png">
+    {% endif %}
+
+
+{% endblock %}
