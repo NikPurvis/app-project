@@ -62,14 +62,26 @@ router.post("/year", (req, res) => {
         .catch(error => res.json(error))
 })
 
-// SHOW route, sorting all songs alphabetically by GENRE
+
+// SHOW route, grouping by GENRE then sorting those genres alphabetically
 router.post("/genre", (req, res) => {
-    Songs.find({}).sort({ genre: 1 })
-        .then(songs => {
-            res.render("songs/genre", {songs: songs})
+    Songs.aggregate([
+        { $group:
+            { _id: "$genre",
+            songs: { $push: "$$ROOT"}
+        }},
+        { $sort: { _id: 1 }},
+        // { $unwind: "songs" }
+    ])
+        .then(genre => {
+            console.log("results:", genre)
+            console.log("specifics:", genre[5])
+            // console.log("songs:", songs)
+            res.render("songs/genre", {genre: genre})
         })
         .catch(error => res.json(error))
 })
+
 
 // SHOW route for individual songs
 router.get("/:id", (req, res) => {
