@@ -113,23 +113,32 @@ router.get("/:id", (req, res) => {
                 "x-rapidapi-key": "701702fab9mshd5535a8e5d6946ap14bdf7jsnf3bd97f911e8"
             }
         })
-            .then(responseAPI => {
-                // console.log("responseapi:", responseAPI)
-                return responseAPI.json()
-            })
-            .then(responseJSON => {
-                let data = responseJSON
+            // Converts the response to JSON so we can play with it
+            .then(responseAPI => responseAPI.json())
+            .then(data1 => {
+                const album = data1.track[0].strAlbum
+                return fetch(`https://theaudiodb.p.rapidapi.com/search.php?s=${song.artist}`, {
+                    "method": "GET",
+                    "headers": {
+                        "x-rapidapi-host": "theaudiodb.p.rapidapi.com",
+                        "x-rapidapi-key": "701702fab9mshd5535a8e5d6946ap14bdf7jsnf3bd97f911e8"
+                    }})
+                    .then(responseAPI => responseAPI.json())
+                    .then(data2 => {
+                        const artist = data2.artists[0]
+                        console.log("artist data:", artist.idArtist)
+                        res.render("songs/show", {
+                        song: song,
+                        album: album,
+                        artist: artist
+                    })
+                // console.log("album:", album)
                 // const apiData = data.track
                 // console.log("apiData", apiData)
                 // console.log("album?", data.album[0].strAlbum)
-                res.render("songs/show", {
-                    song: song,
-                    apiData: data.track
+                    // apiData: data.track
                 })
             })
-
-
-        
         })
         .catch(error => res.json(error))
 })
