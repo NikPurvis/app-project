@@ -2,6 +2,7 @@
 
 
 {% block content %}
+
 <h1>{{ song.title}} by {{ song.artist }}</h1>
 
     {% if song.position contains "Vocals" %}
@@ -48,6 +49,6 @@
 
 <p>apiData2: {{ artist.strWebsite }} </p>
 
-<p>logo:<br /><img src="{{artist. strArtistLogo}}"></p>
+<p>logo:<br /><img src="{{ artist. strArtistLogo }}"></p>
 
 {% endblock %}

@@ -23,9 +23,11 @@ router.get("/", (req, res) => {
     // res.send("/songs route")
     Songs.find({})
     .then(songs => {
-        res.render("songs/index", {songs: songs})
+        const username = req.session.username
+		const loggedIn = req.session.loggedIn
+        res.render("songs/index", {songs: songs, username, loggedIn})
     })
-    .catch(error => res.json(error))
+    .catch(error => res.redirect(`/error?error=${error}`))
 })
 
 
@@ -43,9 +45,11 @@ router.get("/json", (req, res) => {
 router.post("/title", (req, res) => {
     Songs.find({}).sort({ title: 1 })
         .then(songs => {
-            res.render("songs/title", {songs: songs})
+            const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            res.render("songs/title", {songs: songs,username, loggedIn})
         })
-        .catch(error => res.json(error))
+        .catch(error => res.redirect(`/error?error=${error}`))
 })
 
 
@@ -53,9 +57,11 @@ router.post("/title", (req, res) => {
 router.post("/artist", (req, res) => {
     Songs.find({}).sort({ artist: 1 })
         .then(songs => {
-            res.render("songs/artist", {songs: songs})
+            const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            res.render("songs/artist", {songs: songs,username, loggedIn})
         })
-        .catch(error => res.json(error))
+        .catch(error => res.redirect(`/error?error=${error}`))
 })
 
 
@@ -63,9 +69,11 @@ router.post("/artist", (req, res) => {
 router.post("/year", (req, res) => {
     Songs.find({}).sort({ year: 1 })
         .then(songs => {
-            res.render("songs/year", {songs: songs})
+            const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            res.render("songs/year", {songs: songs, username, loggedIn})
         })
-        .catch(error => res.json(error))
+        .catch(error => res.redirect(`/error?error=${error}`))
 })
 
 
@@ -73,9 +81,11 @@ router.post("/year", (req, res) => {
 router.post("/genre", (req, res) => {
     Songs.find({}).sort({ genre: 1 })
         .then(songs => {
-            res.render("songs/genre", {songs: songs})
+            const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            res.render("songs/genre", {songs: songs, username, loggedIn})
         })
-        .catch(error => res.json(error))
+        .catch(error => res.redirect(`/error?error=${error}`))
 })
 
 
