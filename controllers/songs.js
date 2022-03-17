@@ -4,7 +4,9 @@
 const express = require("express")
 const Songs = require("../models/songs")
 const fetch = require("node-fetch")
-
+const URL = process.env.FETCH_URL
+const APIKEY = process.env.APIKEY
+const FETCH_HEAD_HOST = process.env.FETCH_HEAD_HOST
 
 ////////////////////////////////////////////
 // Create router
@@ -77,66 +79,44 @@ router.post("/genre", (req, res) => {
 })
 
 
-// // SHOW route, grouping by GENRE then sorting those genres alphabetically
-// router.post("/genre", (req, res) => {
-//     Songs.aggregate([
-//         { $group:
-//             { _id: "$genre",
-//             songs: { $push: "$$ROOT"}
-//         }},
-//         { $sort: { _id: 1 }},
-//         // { $unwind: "songs" }
-//     ])
-//         .then(genre => {
-//             console.log("results:", genre)
-//             console.log("specifics:", genre[5])
-//             // console.log("songs:", songs)
-//             // const alternative = JSON.stringify(genre[0])
-//             const alternative = genre[0]
-//             console.log("alt:", alternative)
-//             res.render("songs/genre", {genre: genre, alternative: alternative})
-//         })
-//         .catch(error => res.json(error))
-// })
-
-
-// SHOW route for individual songs
+// SHOW route for individual songs, including API data with additional info
 router.get("/:id", (req, res) => {
     const songId = req.params.id
+    // Pulls the unique song ID from the database for the URL
     Songs.findById(songId)
-    .then(song => {        
-        const url = `https://theaudiodb.p.rapidapi.com/searchtrack.php?s=${song.artist}&t=${song.title}`
-        fetch(url, {
+    .then(song => {
+        // Uses the song artist and title to search the API
+        fetch(`${URL}/searchtrack.php?s=${song.artist}&t=${song.title}`, {
             "method": "GET",
             "headers": {
-                "x-rapidapi-host": "theaudiodb.p.rapidapi.com",
-                "x-rapidapi-key": "701702fab9mshd5535a8e5d6946ap14bdf7jsnf3bd97f911e8"
+                "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+                "x-rapidapi-key": `${APIKEY}`
             }
         })
             // Converts the response to JSON so we can play with it
             .then(responseAPI => responseAPI.json())
             .then(data1 => {
+                // We only want the album from this query so saving that to a variable we can pass to the view
                 const album = data1.track[0].strAlbum
-                return fetch(`https://theaudiodb.p.rapidapi.com/search.php?s=${song.artist}`, {
+                // A new fetch from the API for artist information
+                return fetch(`${URL}/search.php?s=${song.artist}`, {
                     "method": "GET",
                     "headers": {
-                        "x-rapidapi-host": "theaudiodb.p.rapidapi.com",
-                        "x-rapidapi-key": "701702fab9mshd5535a8e5d6946ap14bdf7jsnf3bd97f911e8"
-                    }})
+                        "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+                        "x-rapidapi-key": `${APIKEY}`
+                    }
+                })
+                    // Converting the new fetch to JSON
                     .then(responseAPI => responseAPI.json())
                     .then(data2 => {
+                        // Putting the object info to a variable so we can more easily access what we want in the view
                         const artist = data2.artists[0]
-                        console.log("artist data:", artist.idArtist)
+                        // Finally, render the view and pass it the information we've gathered from the fetch calls.
                         res.render("songs/show", {
                         song: song,
                         album: album,
                         artist: artist
                     })
-                // console.log("album:", album)
-                // const apiData = data.track
-                // console.log("apiData", apiData)
-                // console.log("album?", data.album[0].strAlbum)
-                    // apiData: data.track
                 })
             })
         })
@@ -144,34 +124,9 @@ router.get("/:id", (req, res) => {
 })
 
 
-
 // router.get("/songs", (req, res) => {
 //     res.render("/")
 // })
-
-// // SHOW route
-// router.post("/", (req, res) => {
-//     const zip = req.body.zipcode
-//     const url = `https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&units=imperial&appid=${APIKEY}`
-//     fetch(url)
-//         .then(responseAPI => {
-//             return responseAPI.json()
-//         })
-//         .then(responseJSON => {
-//             let weatherData = responseJSON
-//             // console.log("api?", weatherData.name)
-//             res.render("weather/show", {
-//                 city: weatherData.name,
-//                 currTemp: Math.round(weatherData.main.temp),
-//                 description: weatherData.weather[0].description,
-//                 feelsTemp: Math.round(weatherData.main.feels_like),
-//                 minTemp: Math.round(weatherData.main.temp_min),
-//                 maxTemp: Math.round(weatherData.main.temp_max),
-//                 sunrise: moment.unix(weatherData.sys.sunrise).format("h:mm a"),
-//                 sunset: moment.unix(weatherData.sys.sunset).format("h:mm a")
-//             })
-//         })
-// }) 
 
 
 ////////////////////////////////////////////
