@@ -28,7 +28,7 @@ db.on('open', () => {
             position: [ "Vocals", "Harmonies", "Guitar", "Bass", "Drums", "Keys" ]
         }, {
             title: "Vacation",
-            artist: "Go-Go's",
+            artist: "The Go-Go's",
             year: "1982",
             genre: "New Wave",
             position: [ "Vocals", "Harmonies", "Guitar", "Bass", "Drums", "Keys" ]

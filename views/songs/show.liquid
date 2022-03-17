@@ -42,8 +42,6 @@
 
 
 <h2>API stuff</h2>
-{% for album in apiData %}
-latest album: {{ album.strAlbum }}, Year: {{ album.intYearReleased }}<br />
-{% endfor %}
+{{ apiData[0].strTrack }} on {{ apiData[0].strAlbum }} by {{ apiData[0].strArtist }}
 
 {% endblock %}

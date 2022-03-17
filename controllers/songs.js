@@ -105,7 +105,7 @@ router.get("/:id", (req, res) => {
     const songId = req.params.id
     Songs.findById(songId)
     .then(song => {        
-        const url = `https://theaudiodb.p.rapidapi.com/discography.php?s=${song.artist}`
+        const url = `https://theaudiodb.p.rapidapi.com/searchtrack.php?s=${song.artist}&t=${song.title}`
         fetch(url, {
             "method": "GET",
             "headers": {
@@ -119,12 +119,13 @@ router.get("/:id", (req, res) => {
             })
             .then(responseJSON => {
                 let data = responseJSON
-                    // console.log("data:", data)
-                    // console.log("album?", data.album[0].strAlbum)
-                    res.render("songs/show", {
-                        song: song,
-                        apiData: data.album
-                    })
+                // const apiData = data.track
+                // console.log("apiData", apiData)
+                // console.log("album?", data.album[0].strAlbum)
+                res.render("songs/show", {
+                    song: song,
+                    apiData: data.track
+                })
             })
 
 
