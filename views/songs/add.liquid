@@ -4,18 +4,18 @@
 <h1>Add song to setlist</h1>
 
 <div class="form-container">
-    <form action="" method="">
+    <form action="/songs/create" method="POST">
 
         <p><label>Song:
             <input
                 type="text"
-                name="song"
+                name="title"
                 placeholder="Enter song"
                 value="{{ song.title }}"
             >
         </label></p>
 
-        <p><label>Song:
+        <p><label>Artist:
             <input
                 type="text"
                 name="artist"
@@ -43,12 +43,12 @@
             {% endif %}
         </select></p>
         <p>
-            <label for="comments">Hello, Cleveland!</label><br />
-            <textarea id="comments" name="comments" rows="4" cols="50" placeholder="FREEBIRD"></textarea>
+            <label for="comment">Hello, Cleveland!</label><br />
+            <textarea id="comment" name="comment" rows="4" cols="50" placeholder="FREEBIRD"></textarea>
         </p>
+        <input type="submit" value="Add song to setlist">
     </form>
 </div>
 
-<input type="submit" value="Add song to setlist">
 
 {% endblock %}

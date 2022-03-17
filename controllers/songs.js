@@ -3,11 +3,12 @@
 ////////////////////////////////////////////
 const express = require("express")
 const Songs = require("../models/songs")
+const Setlist = require("../models/setlist")
 const fetch = require("node-fetch")
-const songs = require("../models/songs")
 const URL = process.env.FETCH_URL
 const APIKEY = process.env.APIKEY
 const FETCH_HEAD_HOST = process.env.FETCH_HEAD_HOST
+
 
 ////////////////////////////////////////////
 // Create router
@@ -37,6 +38,15 @@ router.get("/json", (req, res) => {
     Songs.find({})
     .then (songs => {
         res.send({ songs })
+    })
+    .catch(error => res.json(error))
+})
+
+// Second JSON route to get direct look at all the objects in Setlist
+router.get("/json2", (req, res) => {
+    Setlist.find({})
+    .then (setlist => {
+        res.send({ setlist })
     })
     .catch(error => res.json(error))
 })
@@ -90,6 +100,20 @@ router.post("/genre", (req, res) => {
 })
 
 
+// POST route, where the setlist selection info is sent from the add form.
+router.post("/create", (req, res) => {
+    req.body.ready = req.body.ready === "on" ? true : false
+
+	req.body.owner = req.session.userId
+	Setlist.create(req.body)
+		.then(setlist => {
+			console.log("Create returned:", setlist)
+			res.redirect("/songs")
+		})
+		.catch(error => res.redirect(`/error?error=${error}`))
+})
+
+
 // SHOW route for individual songs, including API data with additional info
 router.get("/:id", (req, res) => {
     const songId = req.params.id
@@ -139,7 +163,7 @@ router.get("/:id", (req, res) => {
 })
 
 
-// ADD route, to add view for adding to setlist
+// ADD route, to view for adding to setlist
 router.get("/:id/add", (req, res) => {
     // res.send(":id/add route")
     const songId = req.params.id
