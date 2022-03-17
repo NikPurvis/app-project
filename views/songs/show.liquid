@@ -1,6 +1,5 @@
 {% layout 'layout.liquid' %}
 
-
 {% block content %}
 
 <h1>{{ song.title}} by {{ song.artist }}</h1>
@@ -40,6 +39,11 @@
     {% else %}
         <img src="../rb-keys-no.png">
     {% endif %}
+
+
+    <div>
+        <a href="/songs/{{ song.id }}/add"><button class="button is-info">Add to Setlist</button></a>        
+    </div>
 
 
 <h2>API stuff</h2>

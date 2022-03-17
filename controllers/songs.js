@@ -4,6 +4,7 @@
 const express = require("express")
 const Songs = require("../models/songs")
 const fetch = require("node-fetch")
+const songs = require("../models/songs")
 const URL = process.env.FETCH_URL
 const APIKEY = process.env.APIKEY
 const FETCH_HEAD_HOST = process.env.FETCH_HEAD_HOST
@@ -135,6 +136,20 @@ router.get("/:id", (req, res) => {
             })
         })
         .catch(error => res.redirect(`/error?error=${error}`))
+})
+
+
+// ADD route, to add view for adding to setlist
+router.get("/:id/add", (req, res) => {
+    // res.send(":id/add route")
+    const songId = req.params.id
+    Songs.findById(songId)
+    .then(song => {
+        const username = req.session.username
+        const loggedIn = req.session.loggedIn
+        res.render("songs/add", {song: song, username, loggedIn})
+    })
+    .catch(error => res.redirect(`/error?error=${error}`))
 })
 
 
