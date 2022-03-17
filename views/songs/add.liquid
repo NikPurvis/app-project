@@ -6,9 +6,23 @@
 <div class="form-container">
     <form action="" method="">
 
-        <p>These will be prepopulated form items</p>
-        <p>Song: {{ song.title }}</p>
-        <p>Arist: {{ song.artist }}</p>
+        <p><label>Song:
+            <input
+                type="text"
+                name="song"
+                placeholder="Enter song"
+                value="{{ song.title }}"
+            >
+        </label></p>
+
+        <p><label>Song:
+            <input
+                type="text"
+                name="artist"
+                placeholder="Enter artist"
+                value="{{ song.artist }}"
+            >
+        </label></p>
 
         <p><label for="position"><span>Position</span></label>
         <select class="" name="position" id="position">
@@ -30,10 +44,11 @@
         </select></p>
         <p>
             <label for="comments">Hello, Cleveland!</label><br />
-            <textarea id="comments" name="comments" rows="4" cols="50"></textarea>
+            <textarea id="comments" name="comments" rows="4" cols="50" placeholder="FREEBIRD"></textarea>
         </p>
     </form>
 </div>
 
+<input type="submit" value="Add song to setlist">
 
 {% endblock %}
