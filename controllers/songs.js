@@ -95,6 +95,8 @@ router.get("/:id", (req, res) => {
     // Pulls the unique song ID from the database for the URL
     Songs.findById(songId)
     .then(song => {
+        const username = req.session.username
+        const loggedIn = req.session.loggedIn
         // Uses the song artist and title to search the API
         fetch(`${URL}/searchtrack.php?s=${song.artist}&t=${song.title}`, {
             "method": "GET",
@@ -125,12 +127,14 @@ router.get("/:id", (req, res) => {
                         res.render("songs/show", {
                         song: song,
                         album: album,
-                        artist: artist
+                        artist: artist,
+                        username,
+                        loggedIn
                     })
                 })
             })
         })
-        .catch(error => res.json(error))
+        .catch(error => res.redirect(`/error?error=${error}`))
 })
 
 
