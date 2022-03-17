@@ -1,7 +1,39 @@
 {% layout 'layout.liquid' %}
-
 {% block content %}
 
-YAY THE ADD VIEW
+<h1>Add song to setlist</h1>
+
+<div class="form-container">
+    <form action="" method="">
+
+        <p>These will be prepopulated form items</p>
+        <p>Song: {{ song.title }}</p>
+        <p>Arist: {{ song.artist }}</p>
+
+        <p><label for="position"><span>Position</span></label>
+        <select class="" name="position" id="position">
+            {% if song.position contains "Vocals" %}
+                <option value="vocals">Vocals</option>
+            {% endif %}
+            {% if song.position contains "Guitar" %}
+                <option value="guitar">Guitar</option>
+            {% endif %}
+            {% if song.position contains "Bass" %}
+                <option value="bass">Bass</option>
+            {% endif %}
+            {% if song.position contains "Drums" %}
+                <option value="drums">Drums</option>
+            {% endif %}
+            {% if song.position contains "Keys" %}
+                <option value="keys">Keys</option>
+            {% endif %}
+        </select></p>
+        <p>
+            <label for="comments">Hello, Cleveland!</label><br />
+            <textarea id="comments" name="comments" rows="4" cols="50"></textarea>
+        </p>
+    </form>
+</div>
+
 
 {% endblock %}
