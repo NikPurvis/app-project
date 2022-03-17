@@ -10,15 +10,21 @@
                 <form action="/songs/artist" method="POST"><button type="submit">Artist</button></form>
                 <form action="/songs/year" method="POST"><button type="submit">Year</button></form>
                 <form action="/songs/genre" method="POST"><button type="submit">Genre</button></form>
-        </h3>
+            </h3>
 
-            <h1>Hey girl</h1>
+            {% for song in songs %}
+                <li>                
+                    <a href="/songs/{{ song.id }}">"{{ song.title }}"</a> || {{ song.artist }} || {{ song.year }}  ||  <b>{{ song.genre }}</b>
+                </li>
+            {% endfor %}
+
+
+
+            {% comment %} <h1>Hey girl</h1>
             
             <p>testing1: {{ genre }}</p>
             <p>testing2: {{ genre[5] }}</p>
-
-
-
+            <p>testing3: {{ alternative.songs[0].title }}</p> {% endcomment %}
             {% comment %} {% for genre in songs %}
             {{ song.genre }}
             {{ genre.genre }}
@@ -29,12 +35,7 @@
             {{ song.id }}
 
 
-            <li>                
-                <a href="/songs/{{ song.id }}">"{{ song.title }}"</a> || {{ song.artist }} || {{ song.year }}  ||  <b>{{ song.genre }}</b>
-            </li>
-
-
-            {% endfor %} {% endcomment %}
+            {% endcomment %}
 
 
         </article>

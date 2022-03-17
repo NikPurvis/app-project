@@ -12,10 +12,10 @@ const Songs = require('./songs')
 const db = mongoose.connection;
 
 db.on('open', () => {
-	// array of starter fruits
+	// Array of starter songs
 	const seedSongs = [
         {
-            title: "Life on Mars",
+            title: "Life on Mars?",
             artist: "David Bowie",
             year: "1971",
             genre: "Glam",

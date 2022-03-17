@@ -3,6 +3,7 @@
 ////////////////////////////////////////////
 const express = require("express")
 const Songs = require("../models/songs")
+const fetch = require("node-fetch")
 
 
 ////////////////////////////////////////////
@@ -35,6 +36,7 @@ router.get("/json", (req, res) => {
     .catch(error => res.json(error))
 })
 
+
 // SHOW route, sorting all songs alphabetically by TITLE
 router.post("/title", (req, res) => {
     Songs.find({}).sort({ title: 1 })
@@ -43,6 +45,7 @@ router.post("/title", (req, res) => {
         })
         .catch(error => res.json(error))
 })
+
 
 // SHOW route, sorting all songs alphabetically by ARTIST
 router.post("/artist", (req, res) => {
@@ -53,7 +56,8 @@ router.post("/artist", (req, res) => {
         .catch(error => res.json(error))
 })
 
-// SHOW route, sorting all songs alphabetically by YEAR
+
+// SHOW route, sorting all songs numerically by YEAR
 router.post("/year", (req, res) => {
     Songs.find({}).sort({ year: 1 })
         .then(songs => {
@@ -63,32 +67,68 @@ router.post("/year", (req, res) => {
 })
 
 
-// SHOW route, grouping by GENRE then sorting those genres alphabetically
+// SHOW route, sorted alphabetically by GENRE
 router.post("/genre", (req, res) => {
-    Songs.aggregate([
-        { $group:
-            { _id: "$genre",
-            songs: { $push: "$$ROOT"}
-        }},
-        { $sort: { _id: 1 }},
-        // { $unwind: "songs" }
-    ])
-        .then(genre => {
-            console.log("results:", genre)
-            console.log("specifics:", genre[5])
-            // console.log("songs:", songs)
-            res.render("songs/genre", {genre: genre})
+    Songs.find({}).sort({ genre: 1 })
+        .then(songs => {
+            res.render("songs/genre", {songs: songs})
         })
         .catch(error => res.json(error))
 })
+
+
+// // SHOW route, grouping by GENRE then sorting those genres alphabetically
+// router.post("/genre", (req, res) => {
+//     Songs.aggregate([
+//         { $group:
+//             { _id: "$genre",
+//             songs: { $push: "$$ROOT"}
+//         }},
+//         { $sort: { _id: 1 }},
+//         // { $unwind: "songs" }
+//     ])
+//         .then(genre => {
+//             console.log("results:", genre)
+//             console.log("specifics:", genre[5])
+//             // console.log("songs:", songs)
+//             // const alternative = JSON.stringify(genre[0])
+//             const alternative = genre[0]
+//             console.log("alt:", alternative)
+//             res.render("songs/genre", {genre: genre, alternative: alternative})
+//         })
+//         .catch(error => res.json(error))
+// })
 
 
 // SHOW route for individual songs
 router.get("/:id", (req, res) => {
     const songId = req.params.id
     Songs.findById(songId)
-        .then(song => {
-            res.render("songs/show", {song})
+    .then(song => {        
+        const url = `https://theaudiodb.p.rapidapi.com/discography.php?s=${song.artist}`
+        fetch(url, {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "theaudiodb.p.rapidapi.com",
+                "x-rapidapi-key": "701702fab9mshd5535a8e5d6946ap14bdf7jsnf3bd97f911e8"
+            }
+        })
+            .then(responseAPI => {
+                // console.log("responseapi:", responseAPI)
+                return responseAPI.json()
+            })
+            .then(responseJSON => {
+                let data = responseJSON
+                    // console.log("data:", data)
+                    // console.log("album?", data.album[0].strAlbum)
+                    res.render("songs/show", {
+                        song: song,
+                        apiData: data.album
+                    })
+            })
+
+
+        
         })
         .catch(error => res.json(error))
 })
