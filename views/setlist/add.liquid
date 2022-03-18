@@ -6,12 +6,14 @@
 <div class="form-container">
     <form action="/setlist/create" method="POST">
 
+        <input type ="hidden" id="request" name="request" value="{{ song.id }}">
+
         <p><label>Song:
             <input
                 type="text"
                 name="title"
-                placeholder="Enter song"
-                value="{{ song.title }}"
+                placeholder="{{ song.title }}"
+                readonly
             >
         </label></p>
 
@@ -19,8 +21,8 @@
             <input
                 type="text"
                 name="artist"
-                placeholder="Enter artist"
-                value="{{ song.artist }}"
+                placeholder="{{ song.artist }}"
+                readonly
             >
         </label></p>
 

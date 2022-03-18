@@ -24,6 +24,13 @@ const router = express.Router()
 //         // console.log("So setlist username?", setlist.owner.username)
 //     })
 
+// Testing populate pt2: Want to pull the song info and the user info both by way of Setlist
+Setlist.find({ }).populate("owner", "username")
+    .then((setlist) => {
+        console.log("query results:", setlist )
+        // console.log("So setlist username?", setlist.owner.username)
+    })
+
 
 // INDEX route for setlist, showing song requests
 router.get("/", (req, res) => {

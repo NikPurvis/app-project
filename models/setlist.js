@@ -11,10 +11,12 @@ const { Schema, model } = mongoose
 // The schema for songs that are selected by the user
 const SetlistSchema = new Schema(
 	{
-		title: { type: String, required: true },
-		artist: { type: String, required: true },
-        position: { type: String },
-        comment: { type: String, required: true },
+		request: {
+			type: Schema.Types.ObjectID,
+			ref: "songs"
+		},
+        position: [String],
+        comment: { type: String },
         played: { type: Boolean, required: true, default: false },
         owner: { 
 			type: Schema.Types.ObjectID,

@@ -3,4 +3,52 @@
 {% block content %}
 <h1> Setlist Edit </h1>
 
+<div class="form-container">
+    <form action="/setlist/create" method="POST">
+
+        <p><label>Song:
+            <input
+                type="text"
+                name="title"
+                placeholder="Enter song"
+                value="{{ setlist.title }}"
+            >
+        </label></p>
+
+        <p><label>Artist:
+            <input
+                type="text"
+                name="artist"
+                placeholder="Enter artist"
+                value="{{ setlist.artist }}"
+            >
+        </label></p>
+
+        <p><label for="position"><span>Position</span></label>
+        <select class="" name="position" id="position">
+            {% if song.position contains "Vocals" %}
+                <option value="vocals">Vocals</option>
+            {% endif %}
+            {% if song.position contains "Guitar" %}
+                <option value="guitar">Guitar</option>
+            {% endif %}
+            {% if song.position contains "Bass" %}
+                <option value="bass">Bass</option>
+            {% endif %}
+            {% if song.position contains "Drums" %}
+                <option value="drums">Drums</option>
+            {% endif %}
+            {% if song.position contains "Keys" %}
+                <option value="keys">Keys</option>
+            {% endif %}
+        </select></p>
+
+        <p>
+            <label for="comment">Hello, Cleveland!</label><br />
+            <textarea value="{{ setlist.comment }}" id="comment" name="comment" rows="4" cols="50"></textarea>
+        </p>
+        <input type="submit" value="Edit setlist">
+    </form>
+</div>
+
 {% endblock %}
