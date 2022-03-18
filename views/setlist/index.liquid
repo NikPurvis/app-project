@@ -9,7 +9,7 @@
             {% for setlist in setlist  %}
                 {% if setlist.played == false %}
                     <li>
-                        {{ song.title }} by {{ setlist.artist }} ({{ setlist.id }})<br />
+                        {{ setlist.request.title }} by {{ setlist.request.artist }} ({{ setlist.id }})<br />
                         Position: {{ setlist.position }}<br />
                         Requested by: {{ setlist.owner.username }}<br />
                         Comment: {{ setlist.comment }}<br />
