@@ -18,6 +18,17 @@ router.get('/signup', (req, res) => {
 	res.render('auth/signup')
 })
 
+
+// JSON route to get direct look at all the objects in Users
+router.get("/json", (req, res) => {
+    User.find({})
+    .then (user => {
+        res.send({ user })
+    })
+    .catch(error => res.json(error))
+})
+
+
 // POST to send the signup info
 router.post('/signup', async (req, res) => {
 	// set the password to hashed password

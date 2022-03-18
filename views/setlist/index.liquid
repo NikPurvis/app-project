@@ -6,6 +6,19 @@
 
             <h2>Setlist</h2>
 
+            
+            {% for setlist in setlist  %}
+            <li>
+                {{ setlist.title }} by {{ setlist.artist }}<br />
+                Position: {{ setlist.position }}<br />
+                Requested by: {{ setlist.owner.username }}<br />
+                Comment: {{ setlist.comment }}
+            </li><br/>
+            {% endfor %}
+            <br /><br />
+            
+            
+
 
         </article>
     </div>

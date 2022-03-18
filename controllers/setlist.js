@@ -4,6 +4,7 @@
 const express = require("express")
 const Songs = require("../models/songs")
 const Setlist = require("../models/setlist")
+const User = require("../models/user")
 
 
 ////////////////////////////////////////////
@@ -16,9 +17,17 @@ const router = express.Router()
 // Routes
 ////////////////////////////////////////////
 
+// // Testing to see if I can get .populate() to correctly pull the info I want from Users via Setlist.
+// Setlist.find({ }).populate("owner", "username")
+//     .then((setlist) => {
+//         console.log("query results:", setlist )
+//         // console.log("So setlist username?", setlist.owner.username)
+//     })
+
+
 // INDEX route for setlist, showing song requests
 router.get("/", (req, res) => {
-    Setlist.find({})
+    Setlist.find({}).populate("owner", "username")
     .then(setlist => {
         const username = req.session.username
         const loggedIn = req.session.loggedIn

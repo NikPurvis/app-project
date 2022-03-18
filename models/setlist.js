@@ -9,7 +9,7 @@ const Songs = require("./songs")
 const { Schema, model } = mongoose
 
 // The schema for songs that are selected by the user
-const setlistSchema = new Schema(
+const SetlistSchema = new Schema(
 	{
 		title: { type: String, required: true },
 		artist: { type: String, required: true },
@@ -24,8 +24,8 @@ const setlistSchema = new Schema(
 	{ timestamps: true }
 )
 
-// Make the Selection model
-const Setlist = model("Setlist", setlistSchema)
+// Make the Setlist model
+const Setlist = model("Setlist", SetlistSchema)
 
 /////////////////////////////////
 // Export our Model
