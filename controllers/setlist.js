@@ -25,21 +25,29 @@ const router = express.Router()
 //     })
 
 
-// Testing populate pt2: Want to pull the song info and the user info both by way of Setlist
-Setlist.findOne({})
-    .populate({ path: "request", select: ["title", "artist"]})
-    .populate({ path: "owner", select: "username"})
-    .then((setlist) => {
-        console.log("full entry:", setlist)
-        console.log("query results:", setlist.request.title, setlist.request.artist, setlist.owner.username )
-        // console.log("So setlist username?", setlist.owner.username)
-    })
+// // Testing populate pt2: Want to pull the song info and the user info both by way of Setlist
+// Setlist.findOne({})
+//     .populate({ path: "request", select: ["title", "artist"]})
+//     .populate({ path: "owner", select: "username"})
+//     .then((setlist) => {
+//         console.log("full entry:", setlist)
+//         console.log("query results:", setlist.request.title, setlist.request.artist, setlist.owner.username )
+//         // console.log("So setlist username?", setlist.owner.username)
+//     })
 
 
-// INDEX route for setlist, showing song requests
+// INDEX route for setlist, including information from User and Songs documents
 router.get("/", (req, res) => {
-    Setlist.find({}).populate("owner", "username")
-    .then(setlist => {
+    Setlist.find({})
+        .populate({
+            path: "request",
+            select: ["title", "artist"]
+        })
+        .populate({
+            path: "owner",
+            select: "username"
+        })
+        .then((setlist) => {
         const username = req.session.username
         const loggedIn = req.session.loggedIn
         res.render("setlist/index", {setlist: setlist, username, loggedIn})
