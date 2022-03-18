@@ -5,21 +5,21 @@
         <article>
 
             <h2>Setlist</h2>
-
             
             {% for setlist in setlist  %}
-            <li>
-                {{ setlist.title }} by {{ setlist.artist }}<br />
-                Position: {{ setlist.position }}<br />
-                Requested by: {{ setlist.owner.username }}<br />
-                Comment: {{ setlist.comment }}
-            </li><br/>
+                {% if setlist.played == false %}
+                    <li>
+                        {{ setlist.title }} by {{ setlist.artist }} ({{ setlist.id }})<br />
+                        Position: {{ setlist.position }}<br />
+                        Requested by: {{ setlist.owner.username }}<br />
+                        Comment: {{ setlist.comment }}
+                        <form action="/setlist/{{ setlist.id }}?_method=DELETE" method="POST">
+                            <input type="submit" value="WE ROCKED IT" class="btn btn-success">
+                        </form>
+                    </li><br/>
+                {% endif %}
             {% endfor %}
             <br /><br />
-            
-            
-
-
         </article>
     </div>
 {% endblock %}

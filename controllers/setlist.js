@@ -60,6 +60,18 @@ router.post("/create", (req, res) => {
 })
 
 
+// DELETE route, to remove songs from the setlist
+router.delete("/:id", (req, res) => {
+    const setlistId = req.params.id
+    Setlist.findByIdAndRemove(setlistId)
+        .then((setlist) => {
+            console.log("Response from delete:", setlist)
+            res.redirect("/setlist")
+        })
+        .catch(error => res.redirect(`/error?error=${error}`))
+})
+
+
 // ADD route, to view for adding to setlist
 router.get("/:id/add", (req, res) => {
     // res.send(":id/add route")
