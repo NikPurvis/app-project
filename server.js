@@ -3,9 +3,10 @@
 ////////////////////
 require("dotenv").config() // make env variables available
 const express = require("express")
-const middleware = require('./utils/middleware')
-const SongsRouter = require('./controllers/songs')
-const UserRouter = require('./controllers/user')
+const middleware = require("./utils/middleware")
+const SongsRouter = require("./controllers/songs")
+const UserRouter = require("./controllers/user")
+const SetlistRouter = require("./controllers/setlist")
 const User = require("./models/user")
 
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
@@ -23,6 +24,7 @@ middleware(app)
 ////////////////////
 app.use('/auth', UserRouter)
 app.use('/songs', SongsRouter)
+app.use('/setlist', SetlistRouter)
 
 
 app.get('/', (req, res) => {
