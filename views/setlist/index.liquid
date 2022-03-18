@@ -12,7 +12,8 @@
                         {{ setlist.title }} by {{ setlist.artist }} ({{ setlist.id }})<br />
                         Position: {{ setlist.position }}<br />
                         Requested by: {{ setlist.owner.username }}<br />
-                        Comment: {{ setlist.comment }}
+                        Comment: {{ setlist.comment }}<br />
+                        <a href="/setlist/{{ setlist.id }}/edit"><button class="button is-info">Edit</button></a>
                         <form action="/setlist/{{ setlist.id }}?_method=DELETE" method="POST">
                             <input type="submit" value="WE ROCKED IT" class="btn btn-success">
                         </form>

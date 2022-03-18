@@ -86,6 +86,17 @@ router.get("/:id/add", (req, res) => {
 })
 
 
+// EDIT route, takes user to the setlist EDIT view
+router.get("/:id/edit", (req, res) => {
+    const setlistId = req.params.id
+    Setlist.findById(setlistId)
+    .then(setlist => {
+        res.render("setlist/edit", {setlist: setlist })
+    })
+    .catch(error => res.redirect(`/error?error=${error}`))
+})
+
+
 ////////////////////////////////////////////
 // Export router
 ////////////////////////////////////////////
