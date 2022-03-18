@@ -4,14 +4,16 @@
 <h1> Setlist Edit </h1>
 
 <div class="form-container">
-    <form action="/setlist/create" method="POST">
+    <form action="/setlist/{{ setlist.id }}?_method=PUT" method="POST">
+
+        <input type ="hidden" id="request" name="request" value="{{ setlist.request.id }}">
 
         <p><label>Song:
             <input
                 type="text"
                 name="title"
-                placeholder="Enter song"
-                value="{{ setlist.title }}"
+                placeholder="{{ setlist.request.title }}"
+                readonly
             >
         </label></p>
 
@@ -19,27 +21,27 @@
             <input
                 type="text"
                 name="artist"
-                placeholder="Enter artist"
-                value="{{ setlist.artist }}"
+                placeholder="{{ setlist.request.artist }}"
+                readonly
             >
         </label></p>
 
         <p><label for="position"><span>Position</span></label>
         <select class="" name="position" id="position">
-            {% if song.position contains "Vocals" %}
-                <option value="vocals">Vocals</option>
+            {% if setlist.request.position contains "Vocals" %}
+                <option value="Vocals">Vocals</option>
             {% endif %}
-            {% if song.position contains "Guitar" %}
-                <option value="guitar">Guitar</option>
+            {% if setlist.request.position contains "Guitar" %}
+                <option value="Guitar">Guitar</option>
             {% endif %}
-            {% if song.position contains "Bass" %}
-                <option value="bass">Bass</option>
+            {% if setlist.request.position contains "Bass" %}
+                <option value="Bass">Bass</option>
             {% endif %}
-            {% if song.position contains "Drums" %}
-                <option value="drums">Drums</option>
+            {% if setlist.request.position contains "Drums" %}
+                <option value="Drums">Drums</option>
             {% endif %}
-            {% if song.position contains "Keys" %}
-                <option value="keys">Keys</option>
+            {% if setlist.request.position contains "Keys" %}
+                <option value="Keys">Keys</option>
             {% endif %}
         </select></p>
 
@@ -47,7 +49,9 @@
             <label for="comment">Hello, Cleveland!</label><br />
             <textarea value="{{ setlist.comment }}" id="comment" name="comment" rows="4" cols="50"></textarea>
         </p>
-        <input type="submit" value="Edit setlist">
+
+        <input type="submit" value="Edit {{ setlist.request.title }}">
+
     </form>
 </div>
 

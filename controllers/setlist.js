@@ -5,6 +5,7 @@ const express = require("express")
 const Songs = require("../models/songs")
 const Setlist = require("../models/setlist")
 const User = require("../models/user")
+const res = require("express/lib/response")
 
 
 ////////////////////////////////////////////
@@ -109,11 +110,32 @@ router.get("/:id/add", (req, res) => {
 router.get("/:id/edit", (req, res) => {
     const setlistId = req.params.id
     Setlist.findById(setlistId)
+        .populate({
+            path: "request",
+            select: ["title", "artist", "position"]
+        })
     .then(setlist => {
-        res.render("setlist/edit", {setlist: setlist })
+        const username = req.session.username
+        const loggedIn = req.session.loggedIn
+        res.render("setlist/edit", {setlist: setlist, username, loggedIn })
     })
     .catch(error => res.redirect(`/error?error=${error}`))
 })
+
+
+// UPDATE route, sends a PUT request for the changes made on the EDIT view
+router.put("/:id", (req, res) => {
+    const setlistId = req.params.id
+    console.log("the req body:", req.body)
+    Setlist.findByIdAndUpdate(setlistId, req.body)
+        .then(setlist => {
+            console.log("The updated setlist item:", setlist)
+            // res.send("you made it to the edit put")
+            res.redirect("/setlist")
+        })
+        .catch(error => res.redirect(`/error?error=${error}`))
+})
+
 
 
 ////////////////////////////////////////////
