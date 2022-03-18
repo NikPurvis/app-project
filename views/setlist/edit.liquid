@@ -47,7 +47,7 @@
 
         <p>
             <label for="comment">Hello, Cleveland!</label><br />
-            <textarea value="{{ setlist.comment }}" id="comment" name="comment" rows="4" cols="50"></textarea>
+            <textarea id="comment" name="comment" rows="4" cols="50">{{ setlist.comment }}</textarea>
         </p>
 
         <input type="submit" value="Edit {{ setlist.request.title }}">
