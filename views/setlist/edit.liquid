@@ -26,23 +26,37 @@
             >
         </label></p>
 
+        <p>position coming in: {{ setlist.position }}</p>
+
         <p><label for="position"><span>Position</span></label>
         <select class="" name="position" id="position">
-            {% if setlist.request.position contains "Vocals" %}
+
+            {% if setlist.position contains "Vocals" %}
+                <option selected value="Vocals">Vocals</option>
+            {% elsif setlist.request.position contains "Vocals" %}
                 <option value="Vocals">Vocals</option>
             {% endif %}
-            {% if setlist.request.position contains "Guitar" %}
+            {% if setlist.position contains "Guitar" %}
+                <option selected value="Guitar">Guitar</option>
+            {% elsif setlist.request.position contains "Guitar" %}
                 <option value="Guitar">Guitar</option>
             {% endif %}
-            {% if setlist.request.position contains "Bass" %}
+            {% if setlist.position contains "Bass" %}
+                <option selected value="Bass">Bass</option>
+            {% elsif setlist.request.position contains "Bass" %}
                 <option value="Bass">Bass</option>
             {% endif %}
-            {% if setlist.request.position contains "Drums" %}
+            {% if setlist.position contains "Drums" %}
+                <option selected value="Drums">Drums</option>
+            {% elsif setlist.request.position contains "Drums" %}
                 <option value="Drums">Drums</option>
             {% endif %}
-            {% if setlist.request.position contains "Keys" %}
+            {% if setlist.position contains "Keys" %}
+                <option selected value="Keys">Keys</option>
+            {% elsif setlist.request.position contains "Keys" %}
                 <option value="Keys">Keys</option>
             {% endif %}
+
         </select></p>
 
         <p>
