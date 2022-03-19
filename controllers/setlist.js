@@ -4,7 +4,6 @@
 const express = require("express")
 const Songs = require("../models/songs")
 const Setlist = require("../models/setlist")
-const User = require("../models/user")
 const res = require("express/lib/response")
 
 
@@ -39,6 +38,7 @@ const router = express.Router()
 
 // INDEX route for setlist, including information from User and Songs documents
 router.get("/", (req, res) => {
+    const { username, userId, loggedIn } = req.session
     Setlist.find({})
         .populate({
             path: "request",
@@ -49,9 +49,7 @@ router.get("/", (req, res) => {
             select: "username"
         })
         .then((setlist) => {
-        const username = req.session.username
-        const loggedIn = req.session.loggedIn
-        res.render("setlist/index", {setlist: setlist, username, loggedIn})
+        res.render("setlist/index", {setlist: setlist, username, userId, loggedIn})
     })
     .catch(error => res.redirect(`/error?error=${error}`))
 })
@@ -64,6 +62,23 @@ router.get("/json", (req, res) => {
         res.send({ setlist })
     })
     .catch(error => res.json(error))
+})
+
+
+// INDEX route for showing the user's Setlist requests
+router.get("/mine", (req, res) => {
+    // Destructure user info from req.session
+    const { username, userId, loggedIn } = req.session
+	Setlist.find({ owner: userId })
+    // Pull in song info to populate the Setlist
+        .populate({
+            path: "request",
+            select: ["title", "artist"]
+        })
+        .then(setlist => {
+			res.render("setlist/index", { setlist: setlist, username, userId, loggedIn })
+		})
+		.catch(error => res.redirect(`/error?error=${error}`))
 })
 
 
@@ -94,12 +109,10 @@ router.delete("/:id", (req, res) => {
 
 // NEW route, to the form for adding to setlist
 router.get("/:id/add", (req, res) => {
-    // res.send(":id/add route")
+    const { username, loggedIn } = req.session
     const songId = req.params.id
     Songs.findById(songId)
     .then(song => {
-        const username = req.session.username
-        const loggedIn = req.session.loggedIn
         res.render("setlist/add", {song: song, username, loggedIn})
     })
     .catch(error => res.redirect(`/error?error=${error}`))
@@ -108,6 +121,7 @@ router.get("/:id/add", (req, res) => {
 
 // EDIT route, takes user to the setlist edit view
 router.get("/:id/edit", (req, res) => {
+    const { username, loggedIn } = req.session
     const setlistId = req.params.id
     Setlist.findById(setlistId)
         .populate({
@@ -115,8 +129,6 @@ router.get("/:id/edit", (req, res) => {
             select: ["title", "artist", "position"]
         })
     .then(setlist => {
-        const username = req.session.username
-        const loggedIn = req.session.loggedIn
         res.render("setlist/edit", {setlist: setlist, username, loggedIn })
     })
     .catch(error => res.redirect(`/error?error=${error}`))
@@ -126,16 +138,13 @@ router.get("/:id/edit", (req, res) => {
 // UPDATE route, sends a PUT request for the changes made on the EDIT view
 router.put("/:id", (req, res) => {
     const setlistId = req.params.id
-    console.log("the req body:", req.body)
+    req.body.ready = req.body.ready === 'on' ? true : false
     Setlist.findByIdAndUpdate(setlistId, req.body)
         .then(setlist => {
-            console.log("The updated setlist item:", setlist)
-            // res.send("you made it to the edit put")
             res.redirect("/setlist")
         })
         .catch(error => res.redirect(`/error?error=${error}`))
 })
-
 
 
 ////////////////////////////////////////////

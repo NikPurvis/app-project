@@ -4,20 +4,17 @@
     <div class="container-md">
         <article>
 
-            <h2>Setlist</h2>
+            <h2>My Requests</h2>
             
             {% for setlist in setlist  %}
                 {% if setlist.played == false %}
                     <li>
                         {{ setlist.request.title }} by {{ setlist.request.artist }}<br />
                         Position: {{ setlist.position }}<br />
-                        Requested by: {{ setlist.owner.username }}<br />
+                        Requested by: {{ username }}<br />
                         Comment: {{ setlist.comment }}<br />
 
-                        {% if setlist.owner == userId %}
-                            <a href="/setlist/{{ setlist.id }}/edit"><button class="button is-info">Edit</button></a>
-                        {% endif %}
-                        
+                        <a href="/setlist/{{ setlist.id }}/edit"><button class="button is-info">Edit</button></a>
                         <form action="/setlist/{{ setlist.id }}?_method=DELETE" method="POST">
                             <input type="submit" value="WE ROCKED IT" class="btn btn-success">
                         </form>
