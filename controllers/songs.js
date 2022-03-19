@@ -43,7 +43,7 @@ router.get("/json", (req, res) => {
 })
 
 
-// SHOW route, sorting all songs alphabetically by TITLE
+// INDEX route, sorting all songs alphabetically by TITLE
 router.post("/title", (req, res) => {
     Songs.find({}).sort({ title: 1 })
         .then(songs => {
@@ -55,7 +55,7 @@ router.post("/title", (req, res) => {
 })
 
 
-// SHOW route, sorting all songs alphabetically by ARTIST
+// INDEX route, sorting all songs alphabetically by ARTIST
 router.post("/artist", (req, res) => {
     Songs.find({}).sort({ artist: 1 })
         .then(songs => {
@@ -67,7 +67,7 @@ router.post("/artist", (req, res) => {
 })
 
 
-// SHOW route, sorting all songs numerically by YEAR
+// INDEX route, sorting all songs numerically by YEAR
 router.post("/year", (req, res) => {
     Songs.find({}).sort({ year: 1 })
         .then(songs => {
@@ -79,7 +79,7 @@ router.post("/year", (req, res) => {
 })
 
 
-// SHOW route, sorted alphabetically by GENRE
+// INDEX route, sorted alphabetically by GENRE
 router.post("/genre", (req, res) => {
     Songs.find({}).sort({ genre: 1 })
         .then(songs => {

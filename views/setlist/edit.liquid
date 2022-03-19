@@ -1,6 +1,7 @@
 {% layout 'layout.liquid' %}
 
 {% block content %}
+
 <h1> Setlist Edit </h1>
 
 <div class="form-container">
@@ -26,31 +27,34 @@
             >
         </label></p>
 
-        <p>position coming in: {{ setlist.position }}</p>
-
         <p><label for="position"><span>Position</span></label>
         <select class="" name="position" id="position">
 
+            {% comment %} Tests each position to see if it's the one that was previously chosen. If so, it marks the option "selected" so the dropdown will default to that choice. {% endcomment %}
             {% if setlist.position contains "Vocals" %}
                 <option selected value="Vocals">Vocals</option>
             {% elsif setlist.request.position contains "Vocals" %}
                 <option value="Vocals">Vocals</option>
             {% endif %}
+
             {% if setlist.position contains "Guitar" %}
                 <option selected value="Guitar">Guitar</option>
             {% elsif setlist.request.position contains "Guitar" %}
                 <option value="Guitar">Guitar</option>
             {% endif %}
+
             {% if setlist.position contains "Bass" %}
                 <option selected value="Bass">Bass</option>
             {% elsif setlist.request.position contains "Bass" %}
                 <option value="Bass">Bass</option>
             {% endif %}
+
             {% if setlist.position contains "Drums" %}
                 <option selected value="Drums">Drums</option>
             {% elsif setlist.request.position contains "Drums" %}
                 <option value="Drums">Drums</option>
             {% endif %}
+
             {% if setlist.position contains "Keys" %}
                 <option selected value="Keys">Keys</option>
             {% elsif setlist.request.position contains "Keys" %}

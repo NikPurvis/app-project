@@ -67,7 +67,7 @@ router.get("/json", (req, res) => {
 })
 
 
-// POST route, where the setlist selection info is sent from the add form.
+// CREATE route, where the setlist selection info is sent from the add form.
 router.post("/create", (req, res) => {
     req.body.ready = req.body.ready === "on" ? true : false
 	req.body.owner = req.session.userId
@@ -92,7 +92,7 @@ router.delete("/:id", (req, res) => {
 })
 
 
-// ADD route, to view for adding to setlist
+// NEW route, to the form for adding to setlist
 router.get("/:id/add", (req, res) => {
     // res.send(":id/add route")
     const songId = req.params.id
@@ -106,7 +106,7 @@ router.get("/:id/add", (req, res) => {
 })
 
 
-// EDIT route, takes user to the setlist EDIT view
+// EDIT route, takes user to the setlist edit view
 router.get("/:id/edit", (req, res) => {
     const setlistId = req.params.id
     Setlist.findById(setlistId)
