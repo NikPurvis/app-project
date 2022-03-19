@@ -75,6 +75,10 @@ router.get("/mine", (req, res) => {
             path: "request",
             select: ["title", "artist"]
         })
+        .populate({
+            path: "owner",
+            select: "username"
+        })
         .then(setlist => {
 			res.render("setlist/index", { setlist: setlist, username, userId, loggedIn })
 		})
