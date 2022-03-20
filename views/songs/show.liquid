@@ -2,57 +2,86 @@
 
 {% block content %}
 
-<h1>{{ song.title}} by {{ song.artist }}</h1>
+<div class="container-md">
 
-    {% if song.position contains "Vocals" %}
-        <img src="../rb-vocals.png">
-    {% else %}
-        <img src="../rb-vocals-no.png">
-    {% endif %}
-    {% if song.position contains "Duet" %}
-        <img src="../rb-duet.png">
-    {% else %}
-        <img src="../rb-duet-no.png">
-    {% endif %}
-    {% if song.position contains "Harmonies" %}
-        <img src="../rb-harm.png">
-    {% else %}
-        <img src="../rb-harm-no.png">
-    {% endif %}
-    {% if song.position contains "Guitar" %}
-        <img src="../rb-guitar.png">
-    {% else %}
-        <img src="../rb-guitar-no.png"> 
-    {% endif %}
-    {% if song.position contains "Bass" %}
-        <img src="../rb-bass.png">
-    {% else %}
-        <img src="../rb-bass-no.png">
-    {% endif %}
-    {% if song.position contains "Drums" %}
-        <img src="../rb-drums.png">
-    {% else %}
-        <img src="../rb-drums-no.png">
-    {% endif %}
-    {% if song.position contains "Keys" %}
-        <img src="../rb-keys.png">
-    {% else %}
-        <img src="../rb-keys-no.png">
-    {% endif %}
+    <img alt="Big Rock Ending" class="logo" src="../bre-logo2.png"/>
 
+    <div class="game-wrap">
+        <div class="game-info">
+            <h1>"{{ song.title}}" by {{ song.artist }}</h1>
+        
+            {% if song.position contains "Vocals" %}
+                <img class="position" alt="Vocals" src="../rb-vocals.png">
+            {% else %}
+                <img class="position" alt="No Vocals" src="../rb-vocals-no.png">
+            {% endif %}
+            {% if song.position contains "Duet" %}
+                <img class="position" alt="Duet" src="../rb-duet.png">
+            {% else %}
+                <img class="position" alt="No Duet" src="../rb-duet-no.png">
+            {% endif %}
+            {% if song.position contains "Harmonies" %}
+                <img class="position" alt="Harmonies" src="../rb-harm.png">
+            {% else %}
+                <img class="position" alt="No Harmonies" src="../rb-harm-no.png">
+            {% endif %}
+            {% if song.position contains "Guitar" %}
+                <img class="position" alt="Guitar" src="../rb-guitar.png">
+            {% else %}
+                <img class="position" alt="No Guitar" src="../rb-guitar-no.png"> 
+            {% endif %}
+            {% if song.position contains "Bass" %}
+                <img class="position" alt="Bass" src="../rb-bass.png">
+            {% else %}
+                <img class="position" alt="No Bass" src="../rb-bass-no.png">
+            {% endif %}
+            {% if song.position contains "Drums" %}
+                <img class="position" alt="Drums" src="../rb-drums.png">
+            {% else %}
+                <img class="position" alt="No Drums" src="../rb-drums-no.png">
+            {% endif %}
+            {% if song.position contains "Keys" %}
+                <img class="position" alt="Keys" src="../rb-keys.png">
+            {% else %}
+                <img class="position" alt="No Keys" src="../rb-keys-no.png">
+            {% endif %}
+        </div>
 
-    <div>
-        <a href="/setlist/{{ song.id }}/add"><button class="button is-info">Add to Setlist</button></a>        
+        <div class="setlist-add">
+            <a href="/setlist/{{ song.id }}/add"><button class="button is-info">Add to Setlist</button></a>        
+        </div>
     </div>
 
+    <div class="api-wrap">        
+        {% comment %} <p>logo:<br /><img src="{{ artist.strArtistLogo }}"></p> {% endcomment %}
 
-<h2>API stuff</h2>
+        <div class="row align-items-center justify-content-center">
+            <div class="song-basics col-md-3">
+                Title: <strong>{{ song.title }}</strong><br/>
+                Artist: <strong>{{ song.artist }}</strong><br/> 
+                Album: <strong>{{ albumName }}</strong><br/>
+                Release Year: <strong>{{ album.intYearReleased }}</strong>
+            </div>
+            <div class="song-basics col-md-3">
+                {% if album.strAlbumThumb == "" %}
+                    <img alt="Album cover not found" class="album-thumb" src="../not-found.png">
+                {% else %}
+                    <img alt="Album cover" class="album-thumb" src="{{ album.strAlbumThumb }}">
+                {% endif %}
+            </div>
+            <div class="song-basics col-md-3">
+                {% if album.strAlbumThumbBack == null %}
+                    <img alt="Album back not found" class="album-thumb" src="../not-found.png">
+                {% else %}
+                    <img alt="Album back" class="album-thumb" src="{{ album.strAlbumThumbBack }}">
+                {% endif %}
+            </div>
+        </div>
 
-<p>{{ song.title }} on <b>{{ album }}</b> by {{ song.artist }}</p>
-<p>apiData2: {{ artist.strMood }}</p>
-
-<p>apiData2: {{ artist.strWebsite }} </p>
-
-<p>logo:<br /><img src="{{ artist. strArtistLogo }}"></p>
+        <div class="album-descr col-md-12">
+            {{ album.strDescriptionEN }}
+        </div>
+    </div>
+</div>
 
 {% endblock %}

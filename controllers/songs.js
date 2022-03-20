@@ -103,9 +103,22 @@ router.get("/:id", (req, res) => {
             // Converts the response to JSON so we can play with it
             .then(responseAPI => responseAPI.json())
             .then(data1 => {
-                // We only want the album from this query so saving that to a variable we can pass to the view
-                const album = data1.track[0].strAlbum
-                // A new fetch from the API for artist information
+                // We only want the album from this query so saving that to a variable we can use for another fetch and to pass to the view
+                const albumName = data1.track[0].strAlbum
+                return fetch(`${URL}/searchalbum.php?s=${song.artist}&a=${albumName}`, {
+                    "method": "GET",
+                    "headers": {
+                        "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+                        "x-rapidapi-key": `${APIKEY}`
+                    }
+                })
+                    // Convert to JSON
+                    .then(responseAPI => responseAPI.json())
+                    .then(data2 => {
+                        // There's a lot of interesting album info, so putting all of it into a variable to more easily access what we want in the view.
+                        const album = data2.album[0]
+
+                // Now a third and final new fetch from the API for artist information
                 return fetch(`${URL}/search.php?s=${song.artist}`, {
                     "method": "GET",
                     "headers": {
@@ -113,22 +126,24 @@ router.get("/:id", (req, res) => {
                         "x-rapidapi-key": `${APIKEY}`
                     }
                 })
-                    // Converting the new fetch to JSON
+                    // Convert to JSON
                     .then(responseAPI => responseAPI.json())
-                    .then(data2 => {
-                        // Putting the object info to a variable so we can more easily access what we want in the view
-                        const artist = data2.artists[0]
+                    .then(data3 => {
+                        // And once again tossing the fetch info into an object variable for access.
+                        const artist = data3.artists[0]
                         // Finally, render the view and pass it the information we've gathered from the fetch calls.
                         res.render("songs/show", {
                         song: song,
                         album: album,
                         artist: artist,
+                        albumName,
                         username,
                         loggedIn
                     })
                 })
             })
         })
+    })
         .catch(error => res.redirect(`/error?error=${error}`))
 })
 

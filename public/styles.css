@@ -3,6 +3,12 @@
 
 body {
     font-family: "Kanit", sans-serif;
+    background-color: rgb(0,130,190);
+}
+
+img, div {
+    max-width: 100%;
+    height: auto;
 }
 
 .intro {
@@ -10,12 +16,28 @@ body {
 }
 
 .logo {
-    height: 100px;
     margin: 25px 0px;
+    max-width: 75%
 }
 
-.logo-sm {
+.album-thumb {
+    border: 1px solid black;
+}
+
+.intro-wrap .game-wrap, .api-wrap {
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 15px;
+    margin: 20px 0 50px 0;
+    background: rgb(211, 211, 211);
+}
+
+.position {
     height: 50px;
+}
+
+.setlist-add {
+    margin: 20px 0px;
 }
 
 .dropdown {
@@ -29,15 +51,32 @@ body {
     display: none;
     position: absolute;
 }
-ii
+
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
 .sort-button { 
     padding: 10px;
 }
 
 .all-songs {
     border: 2px solid black;
+    border-radius: 20px;
     padding: 20px;
+    background: rgb(211, 211, 211);
+}
+
+.song-basics {
+    margin: 10px 0 20px 0;
+    font-size: 24px;
+}
+
+.album-descr {
+    padding: 20px;
+    text-align: justify;
+}
+
+.bordertown {
+    border: 1px solid black;
 }

@@ -1,15 +1,15 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 
+<img src="bre-logo.png">
 <div class="container-sm">
     <form action="/auth/login" method="POST">
         <fieldset>
-            <img src="bre-logo.png"/>
-            <legend>Yes, you need to log in. Own your awful music tastes, coward.</legend>
-            <label class="form-label">Username: </label>
-            <input type="text" name="username" placeholder="Username" class="form-control" required>
-            <label class="form-label">Password</label>
-            <input type="password" name="password" placeholder="Enter Password" class="form-control" required>
+                <legend>Yes, you need to log in. Own your awful music tastes, coward.</legend>
+                <label class="form-label">Username: </label>
+                <input type="text" name="username" placeholder="Username" class="form-control" required>
+                <label class="form-label">Password</label>
+                <input type="password" name="password" placeholder="Enter Password" class="form-control" required>
         </fieldset>
         <input type="submit" value="Log In" class="btn btn-success">
     </form>
