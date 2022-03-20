@@ -1,3 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Kanit&display=swap");
+
+
+body {
+    font-family: "Kanit", sans-serif;
+}
+
+.intro {
+    font-size: 20px;    
+}
+
+.logo {
+    height: 100px;
+    margin: 25px 0px;
+}
+
+.logo-sm {
+    height: 50px;
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -9,7 +29,15 @@
     display: none;
     position: absolute;
 }
-
+ii
 .dropdown:hover .dropdown-content {
     display: block;
+}
+.sort-button { 
+    padding: 10px;
+}
+
+.all-songs {
+    border: 2px solid black;
+    padding: 20px;
 }
