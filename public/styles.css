@@ -31,7 +31,7 @@ img, div {
     border: 1px solid black;
 }
 
-.intro-wrap, .all-songs-wrap, .game-wrap, .api-wrap, .setlist-req-wrap {
+.intro-wrap, .all-songs-wrap, .game-wrap, .api-wrap, .setlist-req-wrap, .setlist-edit-wrap {
     border: 2px solid black;
     border-radius: 20px;
     padding: 15px;
@@ -45,6 +45,11 @@ img, div {
 
 .setlist-req-wrap {
     margin: 0 0 15px 0;
+}
+
+.setlist-edit-wrap {
+    margin: 0 0 0 0;
+    width: 50%;
 }
 
 
@@ -142,6 +147,7 @@ img, div {
     color: rgb(236, 236, 236);
     border: none;
 }
+
 
 .bordertown {
     border: 1px solid black;
