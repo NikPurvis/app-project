@@ -88,4 +88,4 @@ Finally, once you've rocked the hell out of that bad boy, click the "WE ROCKED I
 5. A front-end way to manage the Rock Band songs. This is going to be my personal song library, so only useful to anyone playing at my house. Ideally, its functionality would be open to all.
 
 6. Cleaner, more efficient code. The song sortings don't need their own views, and there should be a way to modularize the views better too. There are entire blocks of formatting that are straight duplication.
-7. 
+
