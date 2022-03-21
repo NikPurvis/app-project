@@ -18,13 +18,64 @@ Enter, the **Big Rock Ending**, an app that will display your Rock Band songlist
 
 ---
 
-## ERD
+## The User Story
+As a user...
+- I want to see a list of the songs available for play.
+- I want to search that list for a specific song I want to play.
+- I want to browse that list if I'm unsure which song I want to pick.
+- I want to have multiple search and browsing options available to me.
+- I want to select the song I want to play and add it to the queue for the evening.
+- I want to see the list of songs I and others have picked to play.
+
+---
+
+## The Wireframes
+
+![The Index view](images/wireframe1.jpg)
+*The main page of the BRE. Songs will be listed on the right-hand side of the page, sorting options on the left.*
+![The Entity Relationship Diagram](images/erd3.jpg)
+
+![The Song view](images/wireframe2.jpg)
+*What the user will see when a song is selected. Information such as length and album info will be pulled from MusicBrainz.org's API. The bottom of the song view will be a form the user can fill out to add the song to that evening's setlist.*
+There are a total of four documents with two sub-documents: **User** (with **Comments**), **Song** (with **Positions**), **Request** and **Setlist**.
+
+![The Setlist view](images/wireframe3.jpg)
+*The full list of the songs that each user has selected to play for the evening. It will show the song name and artist, as well as the name of who selected it, the position they want to play, and any comment they felt like leaving. Finally, there's a button on the left-hand side that can be clicked to mark the song as having been played and remove it to keep the setlist easily readable.*
+At the center is **Request**, which is a collection of information from User and Song (as selected by the user), alongside its own unique ID and the "Played" field which will be a boolean. These requests will themselves be pulled into **Setlist**, which will be rendered to the users as a view, listing songs they and others have requested.
+
+---
+---
+
+## The ERD (original flavor)
+## Route Table
+
+![The Entity Relationship Diagram](images/erd.jpg)
+*Featuring three models: the song library, the gameplay positions, and the queue/setlist entries. (It could be that I won't need the gameplay portion to be a separate model depending on how I go about this. I'd prefer to keep it to two, but diagrammed for three just in case.)*
+![Route Table](images/route-table.png)
+
+---
+---
+
+## The ERD (take two)
+
+![The Entity Relationship Diagram](images/erd2.jpg)
+
+Featuring three models: **user**, **queue**, and **songs**.
+
+**User** will consist of the user's name and their role, either player or manager (can reset the game session and mark setlist items played).
+
+**Queue** (the setlist), will be contain multiple entires per session, each made up of the player's name, the song and position they want to play, their comment (if any), and a boolean for played or unplayed.
+
+**Songs** is the available song library. This is where the majority of searching and filtering will happen. It will contain the song's title, artist, year, and genre, as well as show the positions charted in the song (from which the player will select when adding to the queue).
+
+---
+---
+
+## ERD (third time's the charm)
 
 ![The Entity Relationship Diagram](images/erd3.jpg)
 
-There are a total of four documents with two sub-documents: **User** (with **Comments**), **Song** (with **Positions**), **Request** and **Setlist**.
-
-At the center is **Request**, which is a collection of information from User and Song (as selected by the user), alongside its own unique ID and the "Played" field which will be a boolean. These requests will themselves be pulled into **Setlist**, which will be rendered to the users as a view, listing songs they and others have requested.
+There are a total of four documents with two sub-documents: **User** (with **Comments**), **Song** (with **Positions**), **Request** and **Setlist**. At the center is **Request**, which is a collection of information from User and Song (as selected by the user), alongside its own unique ID and the "Played" field which will be a boolean. These requests will themselves be pulled into **Setlist**, which will be rendered to the users as a view, listing songs they and others have requested.
 
 ---
 
