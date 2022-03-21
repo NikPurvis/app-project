@@ -1,6 +1,6 @@
 {% layout 'layout.liquid' %}
-
 {% block content %}
+
     <div class="container-md">
         <img class="logo" src="/../bre-logo2.png" />
 
@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <div class="setlist-edit-wrap">
+        <div class="setlist-form-wrap">
             <form action="/setlist/{{ setlist.id }}?_method=PUT" method="POST">
                 <input type ="hidden" id="request" name="request" value="{{ setlist.request.id }}">
             
@@ -18,7 +18,8 @@
                     <div class="col-sm-2">
                         <label for="title">
                             Song:
-                        </label></div>
+                        </label>
+                    </div>
                     <div class="col-md-1"><input
                         type="text"
                         name="title"
@@ -31,7 +32,8 @@
                     <div class="col-sm-2">
                         <label for="artist">
                             Artist:
-                        </label></div>
+                        </label>
+                    </div>
                     <div class="col-md-1"><input
                         type="text"
                         name="artist"
