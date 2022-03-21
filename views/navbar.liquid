@@ -3,20 +3,20 @@
     <div class="container-fluid">
         <a href="/" class="navbar-brand">BRE</a>
         {% if loggedIn %}
-        <a href="/setlist/mine" class="nav-link text-light">Hello {{ username }}! </a>
+        <a href="/setlist/mine" class="nav-link">Hello {{ username }}! </a>
         {% endif %}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             {% if loggedIn %}
-                <a href="/songs" class="nav-link text-light">Song List</a>
-                <a href="/setlist" class="nav-link text-light">Setlist</a>
-                <a href="/setlist/mine" class="nav-link text-light">My Requests</a>
-                <a href="/auth/logout" class="nav-link text-light">Log Out</a>
+                <a href="/songs" class="nav-link">Song List</a>
+                <a href="/setlist" class="nav-link">Setlist</a>
+                <a href="/setlist/mine" class="nav-link">My Requests</a>
+                <a href="/auth/logout" class="nav-link">Log Out</a>
             {% else %}
-                <a href="/auth/signup" class="nav-link text-light">Sign Up</a>
-                <a href="/auth/login" class="nav-link text-light">Sign In</a>
+                <a href="/auth/signup" class="nav-link">Sign Up</a>
+                <a href="/auth/login" class="nav-link">Log In</a>
             {% endif %}
         </div>
     </div>

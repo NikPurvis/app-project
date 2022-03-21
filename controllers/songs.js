@@ -23,7 +23,7 @@ const router = express.Router()
 // INDEX route for all songs
 router.get("/", (req, res) => {
     const { username, loggedIn } = req.session
-    Songs.find({})
+    Songs.find({}).sort({ title: 1 })
     .then(songs => {
         res.render("songs/index", {songs: songs, username, loggedIn})
     })

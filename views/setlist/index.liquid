@@ -2,30 +2,51 @@
 
 {% block content %}
     <div class="container-md">
-        <article>
+        <img class="logo" src="bre-logo2.png"/>
 
-            <h2>Setlist</h2>
-            
-            {% for setlist in setlist  %}
-                {% if setlist.played == false %}
-                    <li>
-                        {{ setlist.request.title }} by {{ setlist.request.artist }}<br />
-                        Position: {{ setlist.position }}<br />
-                        Requested by: {{ setlist.owner.username }}<br />
-                        Comment: {{ setlist.comment }}<br />
-
-                        {% if setlist.owner == userId %}
-                            <a href="/setlist/{{ setlist.id }}/edit"><button class="button is-info">Edit</button></a>
-                        {% endif %}
-                        
-                        <form action="/setlist/{{ setlist.id }}?_method=DELETE" method="POST">
-                            <input type="submit" value="WE ROCKED IT" class="btn btn-success">
-                        </form>
-                        
-                    </li><br/>
-                {% endif %}
-            {% endfor %}
-            <br /><br />
-        </article>
+        <div class="row">
+            <div class="col-auto offset-md-2 setlist-head">
+                Setlist
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                {% for setlist in setlist  %}
+                    <div class="setlist-req-wrap">
+                        <div class="row align-items-center">
+                            <div class="req-song col-md">
+                                <strong>"{{ setlist.request.title }}</strong>" by <strong>{{ setlist.request.artist }}</strong>
+                            </div>
+                            <div class="req-user col-md-3">
+                                Position: <strong>{{ setlist.position }}</strong><br />
+                                Requested by: <strong>{{ setlist.owner.username }}</strong>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="req-comment col-lg-11">
+                                Comment:<br />
+                                <strong>{{ setlist.comment }}</strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <form action="/setlist/{{ setlist.id }}?_method=DELETE" method="POST">
+                                    <input type="submit" value="WE ROCKED IT" class="btn btn-success">
+                                </form>
+                            </div>
+                            <div class="col-md-3">
+                                {% if setlist.owner == userId %}
+                                    <form action="/setlist/{{ setlist.id }}/edit">
+                                        <input type="submit" value="Edit" class="btn req-edit-button">
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
     </div>
 {% endblock %}

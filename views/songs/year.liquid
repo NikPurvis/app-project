@@ -7,27 +7,33 @@
         <img class="logo" src="../bre-logo2.png"/>
         
         <div class="row justify-content-center">
-            <div class="col-md-4"
-                ><h2>Sorted: Year</h2>
+            <div class="col-md-4 all-songs-head">
+                Sorted: Year
             </div>
         </div>
 
         <div class="row justify-content-center">
             
             <div class="sort-categories col-md-2">
-                <h3>
-                    <div class="sort-button"><form action="/songs/title" method="POST"><button type="submit">Title</button></form></div>
-                    <div class="sort-button"><form action="/songs/artist" method="POST"><button type="submit">Artist</button></form></div>
-                    <div class="sort-button"><form action="/songs/year" method="POST"><button type="submit">Year</button></form></div>
-                    <div class="sort-button"><form action="/songs/genre" method="POST"><button type="submit">Genre</button></form></div>
-                </h3>
-            </div>
+                <form action="/songs/title" method="POST">
+                    <button class="sort-button" type="submit">Title</button>
+                </form>
+                <form action="/songs/artist" method="POST">
+                    <button class="sort-button" type="submit">Artist</button>
+                </form>
+                <form action="/songs/year" method="POST">
+                    <button class="sort-button" type="submit">Year</button>
+                </form>
+                <form action="/songs/genre" method="POST">
+                    <button class="sort-button" type="submit">Genre</button>
+                </form>
+        </div>
             
-            <div class="all-songs col-md-6">
+            <div class="all-songs-wrap col-md-6">
             {% for song in songs %}
 
             <li>
-                <a href="/songs/{{ song.id }}">"{{ song.title }}"</a> || {{ song.artist }} || <b>{{ song.year }}</b>  ||  {{ song.genre }}
+                <a class="song-select" href="/songs/{{ song.id }}">"{{ song.title }}"</a> || {{ song.artist }} || <b>{{ song.year }}</b>  ||  {{ song.genre }}
             </li>
             {% endfor %}
         </div>
