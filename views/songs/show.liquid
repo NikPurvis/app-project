@@ -63,7 +63,7 @@
                 Release Year: <strong>{{ album.intYearReleased }}</strong>
             </div>
             <div class="song-basics col-md-3">
-                {% if album.strAlbumThumb == "" %}
+                {% if album.strAlbumThumb == null %}
                     <img alt="Album cover not found" class="album-thumb" src="../not-found.png">
                 {% else %}
                     <img alt="Album cover" class="album-thumb" src="{{ album.strAlbumThumb }}">

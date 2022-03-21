@@ -1,92 +1,97 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 
-    <div class="container-md">
-        <img class="logo" src="/../bre-logo2.png" />
+<div class="container-md">
+    <img class="logo" src="/../bre-logo2.png" />
 
-        <div class="row">
-            <div class="col-auto setlist-head">
-                Add Song to Setlist
-            </div>
-        </div>
-
-        <div class="setlist-form-wrap">
-            <form action="/setlist/create" method="POST">
-
-                <input type="hidden" id="request" name="request" value="{{ song.id }}">
-
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label for="title">
-                            Song:
-                        </label>
-                    </div>
-                    <div class="col-md-1"><input
-                        type="text"
-                        name="title"
-                        placeholder="{{ song.title }}"
-                        readonly>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label for="artist">
-                            Artist:
-                        </label>
-                    </div>
-                    <div class="col-md-1"><input
-                        type="text"
-                        name="artist"
-                        placeholder="{{ song.artist }}"
-                        readonly>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label for="position">
-                            Position:
-                        </label>
-                    </div>
-                    <div class="col-md-1">
-                        <select name="position" id="position">
-                            {% comment %} Checks each possible position to see if it's listed as available in the song document. If so, it's listed as a choice in the drop-down. {% endcomment %}
-                            {% if song.position contains "Vocals" %}
-                                <option value="Vocals">Vocals</option>
-                            {% endif %}
-                            {% if song.position contains "Guitar" %}
-                                <option value="Guitar">Guitar</option>
-                            {% endif %}
-                            {% if song.position contains "Bass" %}
-                                <option value="Bass">Bass</option>
-                            {% endif %}
-                            {% if song.position contains "Drums" %}
-                                <option value="Drums">Drums</option>
-                            {% endif %}
-                            {% if song.position contains "Keys" %}
-                                <option value="Keys">Keys</option>
-                            {% endif %}
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label for="comment">
-                            Hello, Cleveland!
-                        </label>
-                    </div>
-                    <div class="col-md-4">
-                        <textarea id="comment" name="comment" rows="4" cols="30" style="resize: none" placeholder="FREEBIRD"></textarea>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <input class="btn req-edit-button" type="submit" value="Add song to setlist">
-                    </div>
-                </div>
-            </form>
+    <div class="row">
+        <div class="col-auto setlist-head">
+            Add Song to Setlist
         </div>
     </div>
+
+    <div class="setlist-form-wrap">
+        <form action="/setlist/create" method="POST">
+
+            {% comment %} Form includes a hidden field that will send along the song's unique ID from the Songs collection, so the setlist requests are linked to the correct items. {% endcomment %}
+            <input type="hidden" id="request" name="request" value="{{ song.id }}">
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="title">
+                        Song:
+                    </label>
+                </div>
+                <div class="col-md-1"><input
+                    type="text"
+                    name="title"
+                    {% comment %} Pre-populates the song title from the the individual song view. {% endcomment %}
+                    placeholder="{{ song.title }}"
+                    {% comment %} Additionally, the user is unable to edit the field, to preserve data integrity. {% endcomment %}
+                    readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="artist">
+                        Artist:
+                    </label>
+                </div>
+                <div class="col-md-1"><input
+                    type="text"
+                    name="artist"
+                    {% comment %} As with the song title, the artist information is pre-populated and read-only. {% endcomment %}
+                    placeholder="{{ song.artist }}"
+                    readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="position">
+                        Position:
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <select name="position" id="position">
+                        {% comment %} Checks each possible position to see if it's listed as available in the song document. If so, it's listed as a choice in the drop-down. {% endcomment %}
+                        {% if song.position contains "Vocals" %}
+                            <option value="Vocals">Vocals</option>
+                        {% endif %}
+                        {% if song.position contains "Guitar" %}
+                            <option value="Guitar">Guitar</option>
+                        {% endif %}
+                        {% if song.position contains "Bass" %}
+                            <option value="Bass">Bass</option>
+                        {% endif %}
+                        {% if song.position contains "Drums" %}
+                            <option value="Drums">Drums</option>
+                        {% endif %}
+                        {% if song.position contains "Keys" %}
+                            <option value="Keys">Keys</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="comment">
+                        Hello, Cleveland!
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <textarea id="comment" name="comment" rows="4" cols="30" style="resize: none" maxlength="150" placeholder="FREEBIRD"></textarea>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <input class="btn req-edit-button" type="submit" value="Add song to setlist">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 {% endblock %}

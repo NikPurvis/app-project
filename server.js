@@ -22,9 +22,9 @@ middleware(app)
 ////////////////////
 //    Routes      //
 ////////////////////
-app.use('/auth', UserRouter)
-app.use('/songs', SongsRouter)
-app.use('/setlist', SetlistRouter)
+app.use('/auth', UserRouter)		// User
+app.use('/songs', SongsRouter)		// Songs
+app.use('/setlist', SetlistRouter)	// Setlist
 
 
 app.get('/', (req, res) => {

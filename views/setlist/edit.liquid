@@ -1,105 +1,110 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 
-    <div class="container-md">
-        <img class="logo" src="/../bre-logo2.png" />
+<div class="container-md">
+    <img class="logo" src="/../bre-logo2.png" />
 
-        <div class="row">
-            <div class="col-auto setlist-head">
-                Setlist Edit
-            </div>
-        </div>
-
-        <div class="setlist-form-wrap">
-            <form action="/setlist/{{ setlist.id }}?_method=PUT" method="POST">
-                <input type ="hidden" id="request" name="request" value="{{ setlist.request.id }}">
-            
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label for="title">
-                            Song:
-                        </label>
-                    </div>
-                    <div class="col-md-1"><input
-                        type="text"
-                        name="title"
-                        placeholder="{{ setlist.request.title }}"
-                        readonly>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label for="artist">
-                            Artist:
-                        </label>
-                    </div>
-                    <div class="col-md-1"><input
-                        type="text"
-                        name="artist"
-                        placeholder="{{ setlist.request.artist }}"
-                        readonly>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label for="position">
-                            Position:
-                        </label>
-                    </div>
-                    <div class="col-md-1">
-                        <select class="" name="position" id="position">
-                            {% comment %} Tests each position to see if it's the one that was previously chosen. If so, it marks the option "selected" so the dropdown will default to that choice. {% endcomment %}
-                            {% if setlist.position contains "Vocals" %}
-                                <option selected value="Vocals">Vocals</option>
-                            {% elsif setlist.request.position contains "Vocals" %}
-                                <option value="Vocals">Vocals</option>
-                            {% endif %}
-
-                            {% if setlist.position contains "Guitar" %}
-                                <option selected value="Guitar">Guitar</option>
-                            {% elsif setlist.request.position contains "Guitar" %}
-                                <option value="Guitar">Guitar</option>
-                            {% endif %}
-
-                            {% if setlist.position contains "Bass" %}
-                                <option selected value="Bass">Bass</option>
-                            {% elsif setlist.request.position contains "Bass" %}
-                                <option value="Bass">Bass</option>
-                            {% endif %}
-
-                            {% if setlist.position contains "Drums" %}
-                                <option selected value="Drums">Drums</option>
-                            {% elsif setlist.request.position contains "Drums" %}
-                                <option value="Drums">Drums</option>
-                            {% endif %}
-
-                            {% if setlist.position contains "Keys" %}
-                                <option selected value="Keys">Keys</option>
-                            {% elsif setlist.request.position contains "Keys" %}
-                                <option value="Keys">Keys</option>
-                            {% endif %}
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label for="comment">
-                            Comment:
-                        </label>
-                    </div>
-                    <div class="col-md-4">
-                        <textarea id="comment" name="comment" rows="4" cols="30" style="resize: none">{{ setlist.comment }}</textarea>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <input class="btn req-edit-button" type="submit" value="Edit {{ setlist.request.title }}">
-                    </div>
-                </div>
-            </form>
+    <div class="row">
+        <div class="col-auto setlist-head">
+            Setlist Edit
         </div>
     </div>
+
+    <div class="setlist-form-wrap">
+        {% comment %} A hidden form element that includes the unique Setlist request ID with the edit, so the updated information goes where it's supposed to in the database. {% endcomment %}
+        <form action="/setlist/{{ setlist.id }}?_method=PUT" method="POST">
+            <input type ="hidden" id="request" name="request" value="{{ setlist.request.id }}">
+        
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="title">
+                        Song:
+                    </label>
+                </div>
+                <div class="col-md-1"><input
+                    type="text"
+                    name="title"
+                    {% comment %} Pre-populates the song title from the request {% endcomment %}
+                    placeholder="{{ setlist.request.title }}"
+                    {% comment %} The field is for display only, preventing the user from changing the song information in the request. {% endcomment %}
+                    readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="artist">
+                        Artist:
+                    </label>
+                </div>
+                <div class="col-md-1"><input
+                    type="text"
+                    name="artist"
+                    {% comment %} Artist info, like title info, is pre-populated and read only. {% endcomment %}
+                    placeholder="{{ setlist.request.artist }}"
+                    readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="position">
+                        Position:
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <select name="position" id="position">
+                        {% comment %} Tests each position to see if it's the one that was previously chosen. If so, it marks the option "selected" so the dropdown will default to that choice. {% endcomment %}
+                        {% if setlist.position contains "Vocals" %}
+                            <option selected value="Vocals">Vocals</option>
+                        {% elsif setlist.request.position contains "Vocals" %}
+                            <option value="Vocals">Vocals</option>
+                        {% endif %}
+
+                        {% if setlist.position contains "Guitar" %}
+                            <option selected value="Guitar">Guitar</option>
+                        {% elsif setlist.request.position contains "Guitar" %}
+                            <option value="Guitar">Guitar</option>
+                        {% endif %}
+
+                        {% if setlist.position contains "Bass" %}
+                            <option selected value="Bass">Bass</option>
+                        {% elsif setlist.request.position contains "Bass" %}
+                            <option value="Bass">Bass</option>
+                        {% endif %}
+
+                        {% if setlist.position contains "Drums" %}
+                            <option selected value="Drums">Drums</option>
+                        {% elsif setlist.request.position contains "Drums" %}
+                            <option value="Drums">Drums</option>
+                        {% endif %}
+
+                        {% if setlist.position contains "Keys" %}
+                            <option selected value="Keys">Keys</option>
+                        {% elsif setlist.request.position contains "Keys" %}
+                            <option value="Keys">Keys</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="comment">
+                        Comment:
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <textarea id="comment" name="comment" rows="4" cols="30" style="resize: none" maxlength="150">{{ setlist.comment }}</textarea>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <input class="btn req-edit-button" type="submit" value="Edit {{ setlist.request.title }}">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 {% endblock %}

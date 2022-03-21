@@ -17,25 +17,6 @@ const router = express.Router()
 // Routes
 ////////////////////////////////////////////
 
-// // Testing to see if I can get .populate() to correctly pull the info I want from Users via Setlist.
-// Setlist.find({}).populate("owner", "username")
-//     .then((setlist) => {
-//         console.log("query results:", setlist )
-//         // console.log("So setlist username?", setlist.owner.username)
-//     })
-
-
-// // Testing populate pt2: Want to pull the song info and the user info both by way of Setlist
-// Setlist.findOne({})
-//     .populate({ path: "request", select: ["title", "artist"]})
-//     .populate({ path: "owner", select: "username"})
-//     .then((setlist) => {
-//         console.log("full entry:", setlist)
-//         console.log("query results:", setlist.request.title, setlist.request.artist, setlist.owner.username )
-//         // console.log("So setlist username?", setlist.owner.username)
-//     })
-
-
 // INDEX route for setlist, including information from User and Songs documents
 router.get("/", (req, res) => {
     const { username, userId, loggedIn } = req.session
@@ -55,7 +36,7 @@ router.get("/", (req, res) => {
 })
 
 
-// JSON route to get direct look at all the objects in Setlist
+// GET route for showing all the items in Setlist in JSON format
 router.get("/json", (req, res) => {
     Setlist.find({})
     .then (setlist => {

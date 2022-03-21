@@ -74,7 +74,61 @@ db.on('open', () => {
             year: "2017",
             genre: "Pop-Rock",
             position: [ "Vocals", "Harmonies", "Guitar", "Keys" ]
-        }
+        }, {
+            title: "Dancing Queen",
+            artist: "ABBA",
+            year: "1976",
+            genre: "Pop-Rock",
+            position: [ "Vocals", "Harmonies", "Bass", "Drums", "Keys" ]
+        }, {
+            title: "Insane in the Brain",
+            artist: "Cypress Hill",
+            year: "1993",
+            genre: "Hip-Hop",
+            position: [ "Vocals", "Bass", "Drums", "Keys" ]
+        }, {
+            title: "Holiday in Cambodia",
+            artist: "Dead Kennedys",
+            year: "1987",
+            genre: "Punk",
+            position: [ "Vocals", "Guitar", "Bass", "Drums", "Keys" ]
+        }, {
+            title: "Gay Bar",
+            artist: "Electric Six",
+            year: "2003",
+            genre: "Rock",
+            position: [ "Vocals", "Guitar", "Bass", "Drums" ]
+        }, {
+            title: "Much Too Young (To Feel This Damn Old)",
+            artist: "Garth Brooks",
+            year: "1989",
+            genre: "Country",
+            position: [ "Vocals", "Harmonies", "Guitar", "Bass", "Drums" ]
+        }, {
+            title: "Young",
+            artist: "Hollywood Undead",
+            year: "2008",
+            genre: "Nu-Metal",
+            position: [ "Vocals", "Guitar", "Bass", "Drums" ]
+        }, {
+            title: "The Passenger",
+            artist: "Iggy Pop",
+            year: "1977",
+            genre: "Rock",
+            position: [ "Vocals", "Guitar", "Bass", "Drums" ]
+        }, {
+            title: "Code Monkey",
+            artist: "Jonathan Coulton",
+            year: "2006",
+            genre: "Rock",
+            position: [ "Vocals", "Guitar", "Bass", "Drums" ]
+        }, {
+            title: "Need You Now",
+            artist: "Lady Antebellum",
+            year: "2010",
+            genre: "Country",
+            position: [ "Vocals", "Duet", "Guitar", "Bass", "Drums", "Keys" ]
+        }        
     ]
 
 

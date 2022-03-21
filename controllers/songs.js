@@ -23,6 +23,7 @@ const router = express.Router()
 // INDEX route for all songs
 router.get("/", (req, res) => {
     const { username, loggedIn } = req.session
+    // Default sorting  by song title
     Songs.find({}).sort({ title: 1 })
     .then(songs => {
         res.render("songs/index", {songs: songs, username, loggedIn})
@@ -31,7 +32,7 @@ router.get("/", (req, res) => {
 })
 
 
-// JSON route to get direct look at all the objects in Songs
+// GET route to directly see all the objects in Songs in JSON format
 router.get("/json", (req, res) => {
     Songs.find({})
     .then (songs => {

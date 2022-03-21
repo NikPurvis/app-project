@@ -12,14 +12,14 @@ const { Schema, model } = mongoose
 const SetlistSchema = new Schema(
 	{
 		request: {
-			type: Schema.Types.ObjectID,
+			type: Schema.Types.ObjectID,  // Links to the songs collection
 			ref: "songs"
 		},
         position: [String],
         comment: { type: String },
         played: { type: Boolean, required: true, default: false },
         owner: { 
-			type: Schema.Types.ObjectID,
+			type: Schema.Types.ObjectID,  // Links to the user collection
 			ref: "User",
 		}
 	},

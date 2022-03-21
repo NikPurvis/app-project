@@ -1,43 +1,54 @@
 {% layout 'layout.liquid' %}
-
 {% block content %}
 
-    <div class="container-md">
+<div class="container-md">
 
-        <img class="logo" src="../bre-logo2.png"/>
+    <img class="logo" src="../bre-logo2.png"/>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-4 all-songs-head">
+            Sorted: Artist
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
         
-        <div class="row justify-content-center">
-            <div class="col-md-4 all-songs-head">
-                Sorted: Artist
-            </div>
+        <div class="sort-categories col-md-2">
+            <form action="/songs/title" method="POST">
+                <button class="sort-button" type="submit">
+                    Title
+                </button>
+            </form>
+            <form action="/songs/artist" method="POST">
+                <button class="sort-button" type="submit">
+                    Artist
+                </button>
+            </form>
+            <form action="/songs/year" method="POST">
+                <button class="sort-button" type="submit">
+                    Year
+                </button>
+            </form>
+            <form action="/songs/genre" method="POST">
+                <button class="sort-button" type="submit">
+                    Genre
+                </button>
+            </form>
         </div>
-
-        <div class="row justify-content-center">
-            
-            <div class="sort-categories col-md-2">
-                <form action="/songs/title" method="POST">
-                    <button class="sort-button" type="submit">Title</button>
-                </form>
-                <form action="/songs/artist" method="POST">
-                    <button class="sort-button" type="submit">Artist</button>
-                </form>
-                <form action="/songs/year" method="POST">
-                    <button class="sort-button" type="submit">Year</button>
-                </form>
-                <form action="/songs/genre" method="POST">
-                    <button class="sort-button" type="submit">Genre</button>
-                </form>
-        </div>
-            
-            <div class="all-songs-wrap col-md-6">
+        
+        <div class="all-songs-wrap col-md-6">
             {% for song in songs %}
-
-            <li>
-                <a class="song-select" href="/songs/{{ song.id }}">"{{ song.title }}"</a> || <b>{{ song.artist }}</b> || {{ song.year }}  ||  {{ song.genre }}
-            </li>
+                {% comment %} Loop runs through each song and displays its information in a line element. {% endcomment %}
+                <li>
+                    <a class="song-select" href="/songs/{{ song.id }}">
+                        "{{ song.title }}"</a>
+                        || <strong>{{ song.artist }}</strong>
+                        || {{ song.year }}
+                        || {{ song.genre }}
+                </li>
             {% endfor %}
         </div>
     </div>
-        
-    </div>
+</div>
+
 {% endblock %}
