@@ -5,6 +5,7 @@ const express = require("express")
 const Songs = require("../models/songs")
 const Setlist = require("../models/setlist")
 const fetch = require("node-fetch")
+const { append } = require("express/lib/response")
 const URL = process.env.FETCH_URL
 const APIKEY = process.env.APIKEY
 const FETCH_HEAD_HOST = process.env.FETCH_HEAD_HOST
@@ -86,6 +87,34 @@ router.post("/genre", (req, res) => {
 })
 
 
+// CREATE route, where new song info is sent from the add form via the NEW route.
+router.get("/create", (req, res) => {
+    req.body.ready = req.body.ready === "on" ? true : false
+    console.log("request body:", req.body)
+    res.send(req.body)
+})
+
+
+// DELETE route, to remove songs from the database.
+
+
+// NEW route, goes to the form for adding to the song library.
+router.get("/new", (req, res) => {
+    const { username, loggedIn } = req.session
+    res.render("songs/new", { username, loggedIn })
+})
+
+
+// EDIT route, to the form for editing a song in the library.
+router.get("/:id/edit", (req, res) => {
+    res.send("songs /id /edit route")
+})
+
+
+// UPDATE route, sends a PUT request for the changes made in the EDIT view.
+
+
+
 // SHOW route for individual songs, including API data with additional info
 router.get("/:id", (req, res) => {
     const { username, loggedIn } = req.session
@@ -147,7 +176,6 @@ router.get("/:id", (req, res) => {
     })
         .catch(error => res.redirect(`/error?error=${error}`))
 })
-
 
 
 ////////////////////////////////////////////

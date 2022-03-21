@@ -31,7 +31,7 @@ img, div {
     border: 1px solid black;
 }
 
-.intro-wrap, .all-songs-wrap, .game-wrap, .api-wrap, .setlist-req-wrap, .setlist-form-wrap {
+.intro-wrap, .all-songs-wrap, .game-wrap, .api-wrap, .setlist-req-wrap, .setlist-form-wrap, .song-new-wrap {
     border: 2px solid black;
     border-radius: 20px;
     padding: 15px;
@@ -146,6 +146,22 @@ img, div {
     background-color: rgba(92, 164, 223, 0.8);
     color: rgb(236, 236, 236);
     border: none;
+}
+
+.song-add-button {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(15, 189, 15);
+    color: black;
+    width: 100%;
+    font-size: 18px;
+    margin: 20px 0 10px 0;
+}
+
+.song-new-wrap {
+    padding-left: 30px;
+    width: 75%;
 }
 
 
