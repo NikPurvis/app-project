@@ -11,17 +11,17 @@
     </div>
 
     <div class="song-new-wrap col-md-10">
-        <form action="/songs/create" method="POST">
+        <form action="/songs" method="POST">
 
             <div class="row justify-content-between">
                 <div class="col-md-5">
                     <label class="form-label" for="title">
-                        Song:
+                        Title:
                     </label>
                     <input type="text"
                         class="form-label"
                         name="title"
-                        placeholder="ex: Life on Mars?">
+                        placeholder="ex: Life on Mars">
                 </div>
                 <div class="col-md-5">
                     <label class="form-label" for="artist">
@@ -63,37 +63,37 @@
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Vocals" name="position[]" value="Vocals">
+                        <input class="form-check-input" type="checkbox" id="Vocals" name="position" value="Vocals">
                         <label class="form-check-label" for="Vocals">Vocals</label>
                     </div>
                         
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Duet" name="position[]" value="Duet">
+                        <input class="form-check-input" type="checkbox" id="Duet" name="position" value="Duet">
                         <label class="form-check-label" for="Duet">Duet</label>
                     </div>
 
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Harmonies" name="position[]" value="Harmonies">
+                        <input class="form-check-input" type="checkbox" id="Harmonies" name="position" value="Harmonies">
                         <label class="form-check-label" for="Harmonies">Harmonies</label>
                     </div>
 
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Guitar" name="position[]" value="Guitar">
+                        <input class="form-check-input" type="checkbox" id="Guitar" name="position" value="Guitar">
                         <label class="form-check-label" for="Guitar">Guitar</label>
                     </div>
 
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Bass" name="position[]" value="Bass">
+                        <input class="form-check-input" type="checkbox" id="Bass" name="position" value="Bass">
                         <label class="form-check-label" for="Bass">Bass</label>
                     </div>
 
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Drums" name="position[]" value="Drums">
+                        <input class="form-check-input" type="checkbox" id="Drums" name="position" value="Drums">
                         <label class="form-check-label" for="Drums">Drums</label>
                     </div>
 
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="Keys" name="position[]" value="Keys">
+                        <input class="form-check-input" type="checkbox" id="Keys" name="position" value="Keys">
                         <label class="form-check-label" for="Keys">Keys</label>
                     </div>
                 </div>
@@ -102,11 +102,8 @@
             <div class="col-md-8">
                 <input class="btn song-add-button" type="submit" value="Add song to library">
             </div>
-        </form>
         </div>
-    </div>
-</div>
-
+        </form>
     </div>
 </div>
 

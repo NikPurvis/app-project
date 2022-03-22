@@ -88,10 +88,14 @@ router.post("/genre", (req, res) => {
 
 
 // CREATE route, where new song info is sent from the add form via the NEW route.
-router.get("/create", (req, res) => {
-    req.body.ready = req.body.ready === "on" ? true : false
-    console.log("request body:", req.body)
-    res.send(req.body)
+router.post("/", (req, res) => {
+    Songs.create(req.body)
+		.then(songs => {
+        console.log("Create returned:", req.body)
+        console.log("req.body.position:", req.body.position)
+        res.redirect("/songs")
+    })
+		.catch(error => res.redirect(`/error?error=${error}`))
 })
 
 
