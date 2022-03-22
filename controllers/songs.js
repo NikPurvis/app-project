@@ -91,8 +91,7 @@ router.post("/genre", (req, res) => {
 router.post("/", (req, res) => {
     Songs.create(req.body)
 		.then(songs => {
-        console.log("Create returned:", req.body)
-        console.log("req.body.position:", req.body.position)
+        console.log("Create returned:", songs)
         res.redirect("/songs")
     })
 		.catch(error => res.redirect(`/error?error=${error}`))
@@ -117,6 +116,25 @@ router.get("/:id/edit", (req, res) => {
 
 // UPDATE route, sends a PUT request for the changes made in the EDIT view.
 
+
+// router.get("/:id", (req, res) => {
+//         const { username, loggedIn } = req.session
+//         const songId = req.params.id
+//         const response = await fetch(`${URL}/searchtrack.php?s=${song.artist}&t=${song.title}`, {
+//             "method": "GET",
+//             "headers": {
+//                 "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+//                 "x-rapidapi-key": `${APIKEY}`
+//             }
+//         })
+//         if (response.status >= 200 && response.status <= 299) {
+//             const jsonResponse = await response.json()
+//             console.log("jsonResponse:", jsonResponse)
+//         } else {
+//             // handle errors
+//             console.log("error:", response.stastus, response.statusText)
+//         }
+//     })
 
 
 // SHOW route for individual songs, including API data with additional info
