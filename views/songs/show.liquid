@@ -60,7 +60,12 @@
                 Title: <strong>{{ song.title }}</strong><br/>
                 Artist: <strong>{{ song.artist }}</strong><br/> 
                 Album: <strong>{{ album.strAlbum }}</strong><br/>
-                Release Year: <strong>{{ album.intYearReleased }}</strong>
+                Release Year: <strong>
+                    {% if album.intYearRelease == null %}
+                        {{ song.year }}
+                    {% else %}
+                        {{ album.intYearReleased }}
+                    {% endif %}</strong>
             </div>
             <div class="song-basics col-md-3">
                 {% if album.strAlbumThumb == null %}
