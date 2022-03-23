@@ -5,6 +5,7 @@ const express = require("express")
 const Songs = require("../models/songs")
 const Setlist = require("../models/setlist")
 const fetch = require("node-fetch")
+const { append } = require("express/lib/response")
 const URL = process.env.FETCH_URL
 const APIKEY = process.env.APIKEY
 const FETCH_HEAD_HOST = process.env.FETCH_HEAD_HOST
@@ -86,68 +87,134 @@ router.post("/genre", (req, res) => {
 })
 
 
+// CREATE route, where new song info is sent from the add form via the NEW route.
+router.post("/", (req, res) => {
+    Songs.create(req.body)
+		.then(songs => {
+        console.log("Create returned:", songs)
+        res.redirect("/songs")
+    })
+		.catch(error => res.redirect(`/error?error=${error}`))
+})
+
+
+// DELETE route, to remove songs from the database.
+
+
+// NEW route, goes to the form for adding to the song library.
+router.get("/new", (req, res) => {
+    const { username, loggedIn } = req.session
+    res.render("songs/new", { username, loggedIn })
+})
+
+
+// EDIT route, to the form for editing a song in the library.
+router.get("/:id/edit", (req, res) => {
+    res.send("songs /id /edit route")
+})
+
+
+// UPDATE route, sends a PUT request for the changes made in the EDIT view.
+
+
+// router.get("/:id", (req, res) => {
+//         const { username, loggedIn } = req.session
+//         const songId = req.params.id
+//         const response = await fetch(`${URL}/searchtrack.php?s=${song.artist}&t=${song.title}`, {
+//             "method": "GET",
+//             "headers": {
+//                 "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+//                 "x-rapidapi-key": `${APIKEY}`
+//             }
+//         })
+//         if (response.status >= 200 && response.status <= 299) {
+//             const jsonResponse = await response.json()
+//             console.log("jsonResponse:", jsonResponse)
+//         } else {
+//             // handle errors
+//             console.log("error:", response.stastus, response.statusText)
+//         }
+//     })
+
+
 // SHOW route for individual songs, including API data with additional info
 router.get("/:id", (req, res) => {
     const { username, loggedIn } = req.session
     const songId = req.params.id
     // Pulls the unique song ID from the database for the URL
     Songs.findById(songId)
-    .then(song => {
-        // Uses the song artist and title to search the API
-        fetch(`${URL}/searchtrack.php?s=${song.artist}&t=${song.title}`, {
-            "method": "GET",
-            "headers": {
-                "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
-                "x-rapidapi-key": `${APIKEY}`
-            }
-        })
-            // Converts the response to JSON so we can play with it
-            .then(responseAPI => responseAPI.json())
-            .then(data1 => {
-                // We only want the album from this query so saving that to a variable we can use for another fetch and to pass to the view
-                const albumName = data1.track[0].strAlbum
-                return fetch(`${URL}/searchalbum.php?s=${song.artist}&a=${albumName}`, {
-                    "method": "GET",
-                    "headers": {
-                        "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
-                        "x-rapidapi-key": `${APIKEY}`
-                    }
-                })
-                    // Convert to JSON
-                    .then(responseAPI => responseAPI.json())
-                    .then(data2 => {
-                        // There's a lot of interesting album info, so putting all of it into a variable to more easily access what we want in the view.
-                        const album = data2.album[0]
-
-                // Now a third and final new fetch from the API for artist information
-                return fetch(`${URL}/search.php?s=${song.artist}`, {
-                    "method": "GET",
-                    "headers": {
-                        "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
-                        "x-rapidapi-key": `${APIKEY}`
-                    }
-                })
-                    // Convert to JSON
-                    .then(responseAPI => responseAPI.json())
-                    .then(data3 => {
-                        // And once again tossing the fetch info into an object variable for access.
-                        const artist = data3.artists[0]
-                        // Finally, render the view and pass it the information we've gathered from the fetch calls.
-                        res.render("songs/show", {
-                        song: song,
-                        album: album,
-                        artist: artist,
-                        albumName,
-                        username,
-                        loggedIn
+        .then(song => {
+            // The songDetails variable is a final check to see if the song view will be rendered with API info or just from what's in the database.
+            let songDetails = false
+            // First, a fetch from the API to see if the artist is listed.
+            fetch(`${URL}/search.php?s=${song.artist}`, {
+                "method": "GET",
+                "headers": {
+                    "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+                    "x-rapidapi-key": `${APIKEY}`}
+            })
+            // Converting the API results into JSON so we can use it.
+            .then(artistAPI => artistAPI.json())
+            .then(artistSearch => {
+                // If the artist isn't in the API, resolve the promise chain so we don't keep trying to drill further down into what doesn't exist.
+                if (artistSearch.artists === null) {
+                    songDetails = false
+                    Promise.resolve(songDetails)
+                } else {
+                    // If the artist was found, put the search results into a variable so we can play with it later and then keep on going.
+                    const artist = artistSearch.artists[0]
+                    // The second fetch looks for information based on the artist and song title.
+                    return fetch(`${URL}/searchtrack.php?s=${song.artist}&t=${song.title}`, {
+                        "method": "GET",
+                        "headers": {
+                            "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+                            "x-rapidapi-key": `${APIKEY}`}
                     })
-                })
+                    .then(trackAPI => trackAPI.json())
+                    // Once again, checking to see if we got anything. If the song didn't pull any info, we resolve the promise.
+                    .then(trackSearch => {
+                        if (trackSearch.track === null) {
+                            songDetails = false
+                            Promise.resolve(songDetails)
+                        } else {
+                            // If the API call got us info, pull the title of the album into a variable for the next search.
+                            const albumName = trackSearch.track[0].strAlbum
+                            return fetch(`${URL}/searchalbum.php?s=${song.artist}&a=${albumName}`, {
+                                "method": "GET",
+                                "headers": {
+                                    "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+                                    "x-rapidapi-key": `${APIKEY}`}
+                            })
+                            .then(albumAPI => albumAPI.json())
+                            .then(albumSearch => {
+                                // Final check that our API call got the data we want, and if not, resolve the promise.
+                                if (albumSearch.album === null) {
+                                    songDetails = false
+                                    Promise.resolve(songDetails)
+                                } else {
+                                    // Lots of data we can use here, so put it into a variable and then it's time to render the song SHOW view with all the data objects.
+                                    songDetails = true
+                                    const album = albumSearch.album[0]
+                                    res.render("songs/show", {
+                                        song: song,
+                                        artist: artist,
+                                        album: album,
+                                        username, loggedIn
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+                // Here's where we go when the promises resolve early. The SHOW page will render with just the basic song information in the database.
+                if (songDetails === false) {
+                    res.render("songs/show", { song: song, username, loggedIn })
+                }
             })
         })
-    })
+        // And an error catcher if something goes utterly wrong.
         .catch(error => res.redirect(`/error?error=${error}`))
-})
-
+    })
 
 
 ////////////////////////////////////////////
