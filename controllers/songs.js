@@ -143,61 +143,175 @@ router.get("/:id", (req, res) => {
     const songId = req.params.id
     // Pulls the unique song ID from the database for the URL
     Songs.findById(songId)
-    .then(song => {
-        // Uses the song artist and title to search the API
-        fetch(`${URL}/searchtrack.php?s=${song.artist}&t=${song.title}`, {
-            "method": "GET",
-            "headers": {
-                "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
-                "x-rapidapi-key": `${APIKEY}`
-            }
-        })
-            // Converts the response to JSON so we can play with it
-            .then(responseAPI => responseAPI.json())
-            .then(data1 => {
-                // We only want the album from this query so saving that to a variable we can use for another fetch and to pass to the view
-                const albumName = data1.track[0].strAlbum
-                return fetch(`${URL}/searchalbum.php?s=${song.artist}&a=${albumName}`, {
-                    "method": "GET",
-                    "headers": {
-                        "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
-                        "x-rapidapi-key": `${APIKEY}`
-                    }
-                })
-                    // Convert to JSON
-                    .then(responseAPI => responseAPI.json())
-                    .then(data2 => {
-                        // There's a lot of interesting album info, so putting all of it into a variable to more easily access what we want in the view.
-                        const album = data2.album[0]
-
-                // Now a third and final new fetch from the API for artist information
-                return fetch(`${URL}/search.php?s=${song.artist}`, {
-                    "method": "GET",
-                    "headers": {
-                        "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
-                        "x-rapidapi-key": `${APIKEY}`
-                    }
-                })
-                    // Convert to JSON
-                    .then(responseAPI => responseAPI.json())
-                    .then(data3 => {
-                        // And once again tossing the fetch info into an object variable for access.
-                        const artist = data3.artists[0]
-                        // Finally, render the view and pass it the information we've gathered from the fetch calls.
-                        res.render("songs/show", {
-                        song: song,
-                        album: album,
-                        artist: artist,
-                        albumName,
-                        username,
-                        loggedIn
+        .then(song => {
+            let songDetails = false
+            fetch(`${URL}/search.php?s=${song.artist}`, {
+                "method": "GET",
+                "headers": {
+                    "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+                    "x-rapidapi-key": `${APIKEY}`}
+            })
+            .then(artistAPI => artistAPI.json())
+            .then(artistSearch => {
+                if (artistSearch.artists === null) {
+                    songDetails = false
+                    Promise.resolve(songDetails)
+                } else {
+                    const artist = artistSearch.artists[0]
+                    return fetch(`${URL}/searchtrack.php?s=${song.artist}&t=${song.title}`, {
+                        "method": "GET",
+                        "headers": {
+                            "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+                            "x-rapidapi-key": `${APIKEY}`}
                     })
-                })
+                    .then(trackAPI => trackAPI.json())
+                    .then(trackSearch => {
+                        if (trackSearch.track === null) {
+                            songDetails = false
+                            Promise.resolve(songDetails)
+                        } else {
+                            const albumName = trackSearch.track[0].strAlbum
+                            return fetch(`${URL}/searchalbum.php?s=${song.artist}&a=${albumName}`, {
+                                "method": "GET",
+                                "headers": {
+                                    "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+                                    "x-rapidapi-key": `${APIKEY}`}
+                            })
+                            .then(albumAPI => albumAPI.json())
+                            .then(albumSearch => {
+                                if (albumSearch.album === null) {
+                                    songDetails = false
+                                    Promise.resolve(songDetails)
+                                } else {
+                                    songDetails = true
+                                    const album = albumSearch.album[0]
+                                    res.render("songs/show", {
+                                        song: song,
+                                        artist: artist,
+                                        album: album,
+                                        username, loggedIn
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+                if (songDetails === false) {
+                    res.render("songs/show", { song: song, username, loggedIn })
+                }
             })
         })
-    })
         .catch(error => res.redirect(`/error?error=${error}`))
-})
+    })
+
+
+
+
+
+
+    //         .then(artistData => {
+    //             const artist = artistData
+    //             return fetch(`${URL}/searchtrack.php?s=${song.artist}&t=${song.title}`, {
+    //                 "method": "GET",
+    //                 "headers": {
+    //                     "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+    //                     "x-rapidapi-key": `${APIKEY}`}
+    //             })
+    //             .then(responseAPI => responseAPI.json())
+    //             .then(songData => {
+    //                 const 
+    //                 return fetch(`${URL}/searchalbum.php?s=${song.artist}&a=${albumName}`, {
+    //                     "method": "GET",
+    //                     "headers": {
+    //                         "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+    //                         "x-rapidapi-key": `${APIKEY}`}
+    //                 })
+    //             })
+    //             .then(responseAPI => responseAPI.json())
+    //             .then(albumData => {
+
+
+
+
+    //             })
+                
+
+    //     .then(responseAPI => responseAPI.json())
+    //     .then(songData => {
+    //         if (songData.track == null) {
+    //             res.render("songs/show", {
+    //                 song: song, username, loggedIn})
+    //             } else {
+    //                 console.log("should be album:", songData.track[0].strAlbum)
+    //             }
+    //         })
+    //         )
+    //     })
+    // })
+
+
+
+// // SHOW route for individual songs, including API data with additional info
+// router.get("/:id", (req, res) => {
+//     const { username, loggedIn } = req.session
+//     const songId = req.params.id
+//     // Pulls the unique song ID from the database for the URL
+//     Songs.findById(songId)
+//     .then(song => {
+//         // Uses the song artist and title to search the API
+//         fetch(`${URL}/searchtrack.php?s=${song.artist}&t=${song.title}`, {
+//             "method": "GET",
+//             "headers": {
+//                 "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+//                 "x-rapidapi-key": `${APIKEY}`
+//             }
+//         })
+//             // Converts the response to JSON so we can play with it
+//             .then(responseAPI => responseAPI.json())
+//             .then(data1 => {
+//                 // We only want the album from this query so saving that to a variable we can use for another fetch and to pass to the view
+//                 const albumName = data1.track[0].strAlbum
+//                 return fetch(`${URL}/searchalbum.php?s=${song.artist}&a=${albumName}`, {
+//                     "method": "GET",
+//                     "headers": {
+//                         "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+//                         "x-rapidapi-key": `${APIKEY}`
+//                     }
+//                 })
+//                     // Convert to JSON
+//                     .then(responseAPI => responseAPI.json())
+//                     .then(data2 => {
+//                         // There's a lot of interesting album info, so putting all of it into a variable to more easily access what we want in the view.
+//                         const album = data2.album[0]
+
+//                 // Now a third and final new fetch from the API for artist information
+//                 return fetch(`${URL}/search.php?s=${song.artist}`, {
+//                     "method": "GET",
+//                     "headers": {
+//                         "x-rapidapi-host": `${FETCH_HEAD_HOST}`,
+//                         "x-rapidapi-key": `${APIKEY}`
+//                     }
+//                 })
+//                     // Convert to JSON
+//                     .then(responseAPI => responseAPI.json())
+//                     .then(data3 => {
+//                         // And once again tossing the fetch info into an object variable for access.
+//                         const artist = data3.artists[0]
+//                         // Finally, render the view and pass it the information we've gathered from the fetch calls.
+//                         res.render("songs/show", {
+//                         song: song,
+//                         album: album,
+//                         artist: artist,
+//                         albumName,
+//                         username,
+//                         loggedIn
+//                     })
+//                 })
+//             })
+//         })
+//     })
+//         .catch(error => res.redirect(`/error?error=${error}`))
+// })
 
 
 ////////////////////////////////////////////
