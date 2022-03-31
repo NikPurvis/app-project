@@ -99,6 +99,12 @@ router.post("/", (req, res) => {
 
 
 // DELETE route, to remove songs from the database.
+router.delete('/:id', (req, res) => {
+	const songId = req.params.id
+	Songs.findByIdAndRemove(songId)
+		.then(res.redirect('/songs'))
+		.catch(error => res.redirect(`/error?error=${error}`))
+})
 
 
 // NEW route, goes to the form for adding to the song library.
