@@ -24,8 +24,8 @@ const router = express.Router()
 // INDEX route for all songs
 router.get("/", (req, res) => {
     const { username, loggedIn } = req.session
-    // Default sorting  by song title
-    Songs.find({}).sort({ title: 1 })
+    // Default sorting by most recently added
+    Songs.find({}).sort({ createdAt: -1 })
     .then(songs => {
         res.render("songs/index", {songs: songs, username, loggedIn})
     })
